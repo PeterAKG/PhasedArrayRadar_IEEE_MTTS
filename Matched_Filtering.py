@@ -11,19 +11,28 @@ sampling_rate = 30.72e6   # Sampling rate: 30.72 MHz (max resolution)
 time_between_samples = 1/sampling_rate
 
 #t = np.linspace(0, duration, num = int(sampling_rate * duration)) I am going to leave this commented out. This was the original way which we were calculating the cos wave. This is inaccurate though, so we changed it
+#Create a time array which goes from 0 to the closest multiple of the sampling_rate under duration.
 t = np.zeros(1)
 while (t[-1] < duration):
     t = np.append(t, t[-1] + time_between_samples)
 t = t[0:-2]
 
-k = (f_end - f_start)/duration
-theta = 2 * np.pi * (f_start * t + (k/2) * t * t)
+#https://en.wikipedia.org/wiki/Chirp
+#"The corresponding time-domain function for a sinusoidal linear chirp
+# is the sine of the phase in radians:
+# x(t) = sin[Φ_0 + 2π((c/2)t^2 + (f_0)t)]
+c = (f_end - f_start)/duration #The "chirp constant," or the rate of change of the frequency
+theta = 2 * np.pi * (f_start * t + (c/2) * t * t) #obtained by integrating the angular frequency
 
+#Creates the transmitted signal based on the phase of the signal which we calculated earier (theta)
 chirp_signal_transmitted = np.cos(theta)
 chirp_signal_transmitted_complex = np.sin(theta) * complex(0, 1)
 chirp_signal_transmitted = chirp_signal_transmitted + chirp_signal_transmitted_complex
 
-chirp_signal_received = np.flip(chirp_signal_transmitted)
+chirp_signal_received = np.flip(chirp_signal_transmitted) #The signal we receive is going to be time-reversed to the signal we emitted
+#I want to look further into this, but I think we need to take into account that the signal we receieve could be phase shifted compared to the
+#signal we emitted. This is because it's very unlikely that our sampler will just so happen to sample the same exact points on both waves.
+#We should add a phase shift constant to the received wave to account for this. We can make the phase shift random.
 
 chirp_signal_matched_filter = chirp_signal_transmitted - 2 * chirp_signal_transmitted_complex #The matched filter is the time-reversed conjugate of the recieved signal
 

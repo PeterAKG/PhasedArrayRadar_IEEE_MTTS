@@ -1,5 +1,7 @@
 import numpy as np
 
+freq = 0
+dist = 0
 phase_cal = 0
 signal_start = 0
 signal_end = 0 #THESE NEED TO BE CHANGED!!!
@@ -8,23 +10,47 @@ signal_end = 0 #THESE NEED TO BE CHANGED!!!
 def Tracking(delay_az, delay_el):
     # input is previous delays for azimuthal plane and elevation plane 
     # This is the data from each node of the phased array 
-    Rx_0=list()
-    Rx_1=list()
-    Rx_2 = list()
-    Rx_3 = list()
+    Rx_0=list() #lower left
+    Rx_1=list() #lower right 
+    Rx_2 = list() #upper right 
+    Rx_3 = list() #upper left
 
-    delayed_Rx_1 = Rx_1 * np.exp(1j*np.deg2rad(last_delay+phase_cal))
-    delayed_sum = Rx_0 + delayed_Rx_1
-    delayed_delta = Rx_0 - delayed_Rx_1
-    delayed_sum_fft, delayed_sum_dbfs = dbfs(delayed_sum)
-    delayed_delta_fft, delayed_delta_dbfs = dbfs(delayed_delta)
-    mono_angle = monopulse_angle(delayed_sum_fft, delayed_delta_fft)
-    phase_step= 1
-    if np.sign(mono_angle) > 0:
-        new_delay = last_delay - phase_step
+    #phase shifted arrays for each node except R0
+    delayed_Rx_1 = Rx_1 * np.exp(1j*np.deg2rad(delay_az + phase_cal))
+    delayed_Rx_2 = Rx_1 * np.exp(1j*np.deg2rad(delay_el + phase_cal))
+    delayed_Rx_3 = Rx_1 * np.exp(1j*np.deg2rad(delay_az + delay_el + phase_cal))
+
+    sum_x1 = Rx_0 + delayed_Rx_1
+    sum_x2 = delayed_Rx_2 + delayed_Rx_3
+    sum_y1 = Rx_0 + delayed_Rx_3
+    sum_y2 = delayed_Rx_1 + delayed_Rx_2
+    sum_total = sum_x1 + sum_x2
+
+    el_delta = sum_x2 - sum_x1
+    az_delta = sum_y2 - sum_y1
+
+    sum_total_fft, _ = dbfs(sum_total)
+    el_delta_fft, _ = dbfs(el_delta)
+    az_delta_fft, _ = dbfs(az_delta)
+
+    el_mono_angle = monopulse_angle(sum_total_fft, el_delta_fft)
+    az_mono_angle = monopulse_angle(sum_total_fft, az_delta_fft)
+
+    phase_step= 1 # I don't quite understand what this phase step is for. 
+
+    #Don't know if the signs are correct for these. May need to switch them around. 
+    if np.sign(el_mono_angle) > 0:
+        new_el_delay = delay_el - phase_step
     else:
-        new_delay = last_delay + phase_step
-    return new_delay
+        new_el_delay = delay_el + phase_step
+    
+    if np.sign(az_mono_angle) > 0:
+        new_az_delay = delay_az - phase_step
+    else:
+        new_az_delay = delay_az + phase_step
+
+    return new_el_delay, new_az_delay
+
 
 def monopulse_angle(sum, delta):
     sum_delta_corr = np.correlate(sum[signal_start:signal_end], delta[signal_start:signal_end], 'valid')
@@ -40,3 +66,21 @@ def update_tracker():
     delay_el = Tracking(delay_el)
     tracking_angles_el = np.append(tracking_angles_el, calcTheta(delay_el))
     tracking_angles_el = tracking_angles_el[1:]
+
+def calcTheta(phase):
+    # calculates the steering angle for a given phase delta (phase is in deg)
+    # steering angle is theta = arcsin(c*deltaphase/(2*pi*f*d)
+    arcsin_arg = np.deg2rad(phase)*3E8/(2*np.pi*freq*dist)
+    arcsin_arg = max(min(1, arcsin_arg), -1)     # arcsin argument must be between 1 and -1, or numpy will throw a warning
+    calc_theta = np.rad2deg(np.arcsin(arcsin_arg))
+    return calc_theta
+
+def dbfs(raw_data):
+    # function to convert IQ samples to FFT plot, scaled in dBFS
+    NumSamples = len(raw_data)
+    win = np.hamming(NumSamples)
+    y = raw_data * win
+    s_fft = np.fft.fft(y) / np.sum(win)
+    s_shift = np.fft.fftshift(s_fft)
+    s_dbfs = 20*np.log10(np.abs(s_shift)/(2**11))     # Pluto is a signed 12 bit ADC, so use 2^11 to convert to dBFS
+    return s_shift, s_dbfs

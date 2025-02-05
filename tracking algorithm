@@ -1,0 +1,42 @@
+import numpy as np
+
+phase_cal = 0
+signal_start = 0
+signal_end = 0 #THESE NEED TO BE CHANGED!!!
+
+#Tracking algorithm is not finished!!!
+def Tracking(delay_az, delay_el):
+    # input is previous delays for azimuthal plane and elevation plane 
+    # This is the data from each node of the phased array 
+    Rx_0=list()
+    Rx_1=list()
+    Rx_2 = list()
+    Rx_3 = list()
+
+    delayed_Rx_1 = Rx_1 * np.exp(1j*np.deg2rad(last_delay+phase_cal))
+    delayed_sum = Rx_0 + delayed_Rx_1
+    delayed_delta = Rx_0 - delayed_Rx_1
+    delayed_sum_fft, delayed_sum_dbfs = dbfs(delayed_sum)
+    delayed_delta_fft, delayed_delta_dbfs = dbfs(delayed_delta)
+    mono_angle = monopulse_angle(delayed_sum_fft, delayed_delta_fft)
+    phase_step= 1
+    if np.sign(mono_angle) > 0:
+        new_delay = last_delay - phase_step
+    else:
+        new_delay = last_delay + phase_step
+    return new_delay
+
+def monopulse_angle(sum, delta):
+    sum_delta_corr = np.correlate(sum[signal_start:signal_end], delta[signal_start:signal_end], 'valid')
+    angle_diff = np.angle(sum_delta_corr)
+    return angle_diff
+
+def update_tracker():
+    global tracking_angles_az, delay_az, tracking_angles_el, delay_el
+    delay_az = Tracking(delay_az)
+    tracking_angles_az = np.append(tracking_angles_az, calcTheta(delay_az))
+    tracking_angles_az = tracking_angles_az[1:]
+
+    delay_el = Tracking(delay_el)
+    tracking_angles_el = np.append(tracking_angles_el, calcTheta(delay_el))
+    tracking_angles_el = tracking_angles_el[1:]

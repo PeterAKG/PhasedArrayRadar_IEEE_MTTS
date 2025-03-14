@@ -3,11 +3,20 @@
 	<item key="hasShownOverlayPopupBefore" value="true"/>
 	<item key="replaceBarOpen" value="false"/>
 	<list key="searchhistory">
+		<item value="MultiModeConfigChannel "/>
+		<item value="ADC1"/>
+		<item value="  ADC_Cmd(ADC1, ENABLE);"/>
+		<item value="ADC_HandleTypeDef"/>
+		<item value="hadc2"/>
+		<item value="ADC"/>
+		<item value="HAL_ADC_ConvCpltCallback"/>
+		<item value="error_"/>
+		<item value="convCompleted"/>
+		<item value="MX_ADC2_Init"/>
+		<item value="baud"/>
 		<item value="Callback"/>
 		<item value="completed"/>
 		<item value="transmit"/>
 		<item value="hadc1"/>
-		<item value="main"/>
-		<item value="write"/>
 	</list>
 </section>

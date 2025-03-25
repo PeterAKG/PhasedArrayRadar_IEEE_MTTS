@@ -38,8 +38,10 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-uint32_t adc_buf1[ADC_BUF_LEN];
-uint32_t adc_buf3[ADC_BUF_LEN];
+uint16_t adc_buf1[2 * ADC_BUF_LEN]; //The reason this is a 16 bit buffer is that we are writing a 32 bit number which contains two different 16 bit values. Instead of writing it to an
+//array of 32 bit numbers with a length of ADC_BUF_LEN, why not write it to an array of 16 bit numbers with a length of ADC_BUF_LEN * 2 to make it easier on our brain?
+
+uint16_t adc_buf3[2 * ADC_BUF_LEN];
 
 /* USER CODE END PM */
 
@@ -75,7 +77,8 @@ UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
 uint32_t values;
-char msg[20];
+uint32_t values2;
+char msg[40];
 
 /* USER CODE END PV */
 
@@ -162,8 +165,10 @@ int main(void)
   MX_ADC4_Init();
   /* USER CODE BEGIN 2 */
 
-  HAL_ADCEx_MultiModeStart_DMA(&hadc1, adc_buf1, ADC_BUF_LEN); //I figured out how the dual synchronous simultaneous mode works, but it broke randomly. For some reason, it is only writing the value of one channel to
+  HAL_ADCEx_MultiModeStart_DMA(&hadc1, (uint32_t *) adc_buf1, 2 * ADC_BUF_LEN); //I figured out how the dual synchronous simultaneous mode works, but it broke randomly. For some reason, it is only writing the value of one channel to
   //the buffer. I have no idea why.
+
+  HAL_ADCEx_MultiModeStart_DMA(&hadc3, (uint32_t *) adc_buf3, 2 * ADC_BUF_LEN);
 
   //HAL_ADCEx_MultiModeStart_DMA(&hadc3, adc_buf3, ADC_BUF_LEN);
 
@@ -176,8 +181,9 @@ int main(void)
 	  HAL_Delay(100);
 
 	  values = HAL_ADCEx_MultiModeGetValue(&hadc1);
+	  values2 = HAL_ADCEx_MultiModeGetValue(&hadc3);
 
-	  sprintf(msg, "%lx \r\n", values);
+	  sprintf(msg, "1: %lx \r\n2: %lx \r\n", values, values2);
 	  HAL_UART_Transmit(&huart1, (uint8_t*) msg, strlen(msg), HAL_MAX_DELAY);
 
 	  //HAL_Delay(1000);

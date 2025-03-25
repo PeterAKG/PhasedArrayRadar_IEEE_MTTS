@@ -3,6 +3,7 @@
 	<item key="hasShownOverlayPopupBefore" value="true"/>
 	<item key="replaceBarOpen" value="false"/>
 	<list key="searchhistory">
+		<item value="baud"/>
 		<item value="MultiModeConfigChannel "/>
 		<item value="ADC1"/>
 		<item value="  ADC_Cmd(ADC1, ENABLE);"/>
@@ -13,7 +14,6 @@
 		<item value="error_"/>
 		<item value="convCompleted"/>
 		<item value="MX_ADC2_Init"/>
-		<item value="baud"/>
 		<item value="Callback"/>
 		<item value="completed"/>
 		<item value="transmit"/>

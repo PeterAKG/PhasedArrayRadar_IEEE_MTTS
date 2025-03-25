@@ -2717,3 +2717,81 @@ This warning can be switched off on the Team > Git > Confirmations and Warnings 
 
 !ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-03-25 19:11:21.475
 !MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.egit.core 4 0 2025-03-25 19:24:49.497
+!MESSAGE An exception occurred during push on URI git@github.com:PeterAKG/PhasedArrayRadar_IEEE_MTTS.git: git@github.com:PeterAKG/PhasedArrayRadar_IEEE_MTTS.git: DefaultConnectFuture[git@github.com/<unresolved>:22]: Failed (UnresolvedAddressException) to execute: null
+!STACK 0
+org.eclipse.jgit.errors.TransportException: git@github.com:PeterAKG/PhasedArrayRadar_IEEE_MTTS.git: DefaultConnectFuture[git@github.com/<unresolved>:22]: Failed (UnresolvedAddressException) to execute: null
+	at org.eclipse.jgit.transport.sshd.SshdSessionFactory.getSession(SshdSessionFactory.java:267)
+	at org.eclipse.jgit.transport.sshd.SshdSessionFactory.getSession(SshdSessionFactory.java:1)
+	at org.eclipse.jgit.transport.SshTransport.getSession(SshTransport.java:107)
+	at org.eclipse.jgit.transport.TransportGitSsh$SshPushConnection.<init>(TransportGitSsh.java:362)
+	at org.eclipse.jgit.transport.TransportGitSsh.openPush(TransportGitSsh.java:157)
+	at org.eclipse.jgit.transport.PushProcess.execute(PushProcess.java:140)
+	at org.eclipse.jgit.transport.Transport.push(Transport.java:1533)
+	at org.eclipse.egit.core.op.PushOperation.run(PushOperation.java:269)
+	at org.eclipse.egit.ui.internal.push.PushJob.performJob(PushJob.java:86)
+	at org.eclipse.egit.ui.internal.jobs.RepositoryJob.run(RepositoryJob.java:59)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Caused by: org.apache.sshd.common.SshException: DefaultConnectFuture[git@github.com/<unresolved>:22]: Failed (UnresolvedAddressException) to execute: null
+	at org.apache.sshd.common.future.AbstractSshFuture.lambda$verifyResult$2(AbstractSshFuture.java:146)
+	at org.apache.sshd.common.future.AbstractSshFuture.formatExceptionMessage(AbstractSshFuture.java:206)
+	at org.apache.sshd.common.future.AbstractSshFuture.verifyResult(AbstractSshFuture.java:145)
+	at org.apache.sshd.client.future.DefaultConnectFuture.verify(DefaultConnectFuture.java:55)
+	at org.apache.sshd.client.future.DefaultConnectFuture.verify(DefaultConnectFuture.java:36)
+	at org.apache.sshd.common.future.VerifiableFuture.verify(VerifiableFuture.java:121)
+	at org.eclipse.jgit.transport.sshd.SshdSession.connect(SshdSession.java:215)
+	at org.eclipse.jgit.transport.sshd.SshdSession.connect(SshdSession.java:146)
+	at org.eclipse.jgit.transport.sshd.SshdSession.connect(SshdSession.java:100)
+	at org.eclipse.jgit.transport.sshd.SshdSessionFactory.getSession(SshdSessionFactory.java:260)
+	... 10 more
+Caused by: java.nio.channels.UnresolvedAddressException
+	at java.base/sun.nio.ch.Net.checkAddress(Net.java:137)
+	at java.base/sun.nio.ch.WindowsAsynchronousSocketChannelImpl.implConnect(WindowsAsynchronousSocketChannelImpl.java:339)
+	at java.base/sun.nio.ch.AsynchronousSocketChannelImpl.connect(AsynchronousSocketChannelImpl.java:200)
+	at org.apache.sshd.common.io.nio2.Nio2Connector.connect(Nio2Connector.java:88)
+	at org.eclipse.jgit.internal.transport.sshd.JGitSshClient.connect(JGitSshClient.java:156)
+	at org.eclipse.jgit.transport.sshd.SshdSession.connect(SshdSession.java:210)
+	... 13 more
+
+!ENTRY org.eclipse.egit.ui 4 0 2025-03-25 19:24:49.500
+!MESSAGE Can't connect to any repository: git@github.com:PeterAKG/PhasedArrayRadar_IEEE_MTTS.git (git@github.com:PeterAKG/PhasedArrayRadar_IEEE_MTTS.git: DefaultConnectFuture[git@github.com/<unresolved>:22]: Failed (UnresolvedAddressException) to execute: null)
+
+!ENTRY org.eclipse.egit.ui 4 0 2025-03-25 19:26:32.985
+!MESSAGE git@github.com:PeterAKG/PhasedArrayRadar_IEEE_MTTS.git: DefaultConnectFuture[git@github.com/<unresolved>:22]: Failed (UnresolvedAddressException) to execute: null
+!STACK 0
+org.eclipse.jgit.api.errors.TransportException: git@github.com:PeterAKG/PhasedArrayRadar_IEEE_MTTS.git: DefaultConnectFuture[git@github.com/<unresolved>:22]: Failed (UnresolvedAddressException) to execute: null
+	at org.eclipse.jgit.api.LsRemoteCommand.execute(LsRemoteCommand.java:192)
+	at org.eclipse.jgit.api.LsRemoteCommand.call(LsRemoteCommand.java:131)
+	at org.eclipse.egit.core.op.ListRemoteOperation.run(ListRemoteOperation.java:116)
+	at org.eclipse.egit.ui.internal.components.AsynchronousListOperation.run(AsynchronousListOperation.java:76)
+	at org.eclipse.egit.ui.internal.dialogs.CancelableFuture$1.run(CancelableFuture.java:280)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Caused by: org.eclipse.jgit.errors.TransportException: git@github.com:PeterAKG/PhasedArrayRadar_IEEE_MTTS.git: DefaultConnectFuture[git@github.com/<unresolved>:22]: Failed (UnresolvedAddressException) to execute: null
+	at org.eclipse.jgit.transport.sshd.SshdSessionFactory.getSession(SshdSessionFactory.java:267)
+	at org.eclipse.jgit.transport.sshd.SshdSessionFactory.getSession(SshdSessionFactory.java:1)
+	at org.eclipse.jgit.transport.SshTransport.getSession(SshTransport.java:107)
+	at org.eclipse.jgit.transport.TransportGitSsh$SshFetchConnection.<init>(TransportGitSsh.java:285)
+	at org.eclipse.jgit.transport.TransportGitSsh.openFetch(TransportGitSsh.java:152)
+	at org.eclipse.jgit.api.LsRemoteCommand.execute(LsRemoteCommand.java:170)
+	... 5 more
+Caused by: org.apache.sshd.common.SshException: DefaultConnectFuture[git@github.com/<unresolved>:22]: Failed (UnresolvedAddressException) to execute: null
+	at org.apache.sshd.common.future.AbstractSshFuture.lambda$verifyResult$2(AbstractSshFuture.java:146)
+	at org.apache.sshd.common.future.AbstractSshFuture.formatExceptionMessage(AbstractSshFuture.java:206)
+	at org.apache.sshd.common.future.AbstractSshFuture.verifyResult(AbstractSshFuture.java:145)
+	at org.apache.sshd.client.future.DefaultConnectFuture.verify(DefaultConnectFuture.java:55)
+	at org.apache.sshd.client.future.DefaultConnectFuture.verify(DefaultConnectFuture.java:36)
+	at org.apache.sshd.common.future.VerifiableFuture.verify(VerifiableFuture.java:121)
+	at org.eclipse.jgit.transport.sshd.SshdSession.connect(SshdSession.java:215)
+	at org.eclipse.jgit.transport.sshd.SshdSession.connect(SshdSession.java:146)
+	at org.eclipse.jgit.transport.sshd.SshdSession.connect(SshdSession.java:100)
+	at org.eclipse.jgit.transport.sshd.SshdSessionFactory.getSession(SshdSessionFactory.java:260)
+	... 10 more
+Caused by: java.nio.channels.UnresolvedAddressException
+	at java.base/sun.nio.ch.Net.checkAddress(Net.java:137)
+	at java.base/sun.nio.ch.WindowsAsynchronousSocketChannelImpl.implConnect(WindowsAsynchronousSocketChannelImpl.java:339)
+	at java.base/sun.nio.ch.AsynchronousSocketChannelImpl.connect(AsynchronousSocketChannelImpl.java:200)
+	at org.apache.sshd.common.io.nio2.Nio2Connector.connect(Nio2Connector.java:88)
+	at org.eclipse.jgit.internal.transport.sshd.JGitSshClient.connect(JGitSshClient.java:156)
+	at org.eclipse.jgit.transport.sshd.SshdSession.connect(SshdSession.java:210)
+	... 13 more

@@ -51,9 +51,7 @@ ADC_HandleTypeDef hadc2;
 ADC_HandleTypeDef hadc3;
 ADC_HandleTypeDef hadc4;
 DMA_HandleTypeDef hdma_adc1;
-DMA_HandleTypeDef hdma_adc2;
 DMA_HandleTypeDef hdma_adc3;
-DMA_HandleTypeDef hdma_adc4;
 
 DAC_HandleTypeDef hdac1;
 
@@ -165,10 +163,10 @@ int main(void)
   MX_ADC4_Init();
   /* USER CODE BEGIN 2 */
 
-  HAL_ADCEx_MultiModeStart_DMA(&hadc1, (uint32_t *) adc_buf1, 2 * ADC_BUF_LEN); //I figured out how the dual synchronous simultaneous mode works, but it broke randomly. For some reason, it is only writing the value of one channel to
+  HAL_ADCEx_MultiModeStart_DMA(&hadc1, (uint32_t *) adc_buf1, ADC_BUF_LEN); //I figured out how the dual synchronous simultaneous mode works, but it broke randomly. For some reason, it is only writing the value of one channel to
   //the buffer. I have no idea why.
 
-  HAL_ADCEx_MultiModeStart_DMA(&hadc3, (uint32_t *) adc_buf3, 2 * ADC_BUF_LEN);
+  HAL_ADCEx_MultiModeStart_DMA(&hadc3, (uint32_t *) adc_buf3, ADC_BUF_LEN);
 
   //HAL_ADCEx_MultiModeStart_DMA(&hadc3, adc_buf3, ADC_BUF_LEN);
 
@@ -337,7 +335,7 @@ static void MX_ADC2_Init(void)
   hadc2.Init.ContinuousConvMode = ENABLE;
   hadc2.Init.NbrOfConversion = 1;
   hadc2.Init.DiscontinuousConvMode = DISABLE;
-  hadc2.Init.DMAContinuousRequests = ENABLE;
+  hadc2.Init.DMAContinuousRequests = DISABLE;
   hadc2.Init.Overrun = ADC_OVR_DATA_PRESERVED;
   hadc2.Init.OversamplingMode = DISABLE;
   if (HAL_ADC_Init(&hadc2) != HAL_OK)
@@ -397,7 +395,7 @@ static void MX_ADC3_Init(void)
   hadc3.Init.DiscontinuousConvMode = DISABLE;
   hadc3.Init.ExternalTrigConv = ADC_SOFTWARE_START;
   hadc3.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
-  hadc3.Init.DMAContinuousRequests = DISABLE;
+  hadc3.Init.DMAContinuousRequests = ENABLE;
   hadc3.Init.Overrun = ADC_OVR_DATA_PRESERVED;
   hadc3.Init.OversamplingMode = DISABLE;
   if (HAL_ADC_Init(&hadc3) != HAL_OK)
@@ -1429,12 +1427,6 @@ static void MX_DMA_Init(void)
   /* DMA2_Channel1_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA2_Channel1_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(DMA2_Channel1_IRQn);
-  /* DMA2_Channel2_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA2_Channel2_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(DMA2_Channel2_IRQn);
-  /* DMA1_Channel8_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA1_Channel8_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(DMA1_Channel8_IRQn);
 
 }
 
@@ -1546,11 +1538,11 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 //Called when first half of buffer is filled
 void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef* hadc){
-	if(hadc->Instance == ADC1)
+	if(hadc->DMA_Handle->Instance == DMA1_Channel4)
 	{
 	 HAL_GPIO_WritePin(GPIOF, GPIO_PIN_3, GPIO_PIN_SET);
 	}
-	else if (hadc->Instance == ADC2)
+	else if (hadc->DMA_Handle->Instance == DMA2_Channel1)
 	{
 	 HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, GPIO_PIN_SET);
 	}
@@ -1562,17 +1554,17 @@ void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef* hadc){
 
 //Called when buffer is completely filled
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc){
-	if(hadc->Instance == ADC1)
+	if(hadc->DMA_Handle->Instance == DMA1_Channel4)
 	{
-	 HAL_GPIO_WritePin(GPIOF, GPIO_PIN_3, GPIO_PIN_RESET);
+	 HAL_GPIO_WritePin(GPIOF, GPIO_PIN_3, GPIO_PIN_SET);
 	}
-	else if (hadc->Instance == ADC2)
+	else if (hadc->DMA_Handle->Instance == DMA2_Channel1)
 	{
-	 HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, GPIO_PIN_RESET);
+	 HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, GPIO_PIN_SET);
 	}
 	else
 	{
-     HAL_GPIO_WritePin(GPIOD, GPIO_PIN_5, GPIO_PIN_RESET);
+     HAL_GPIO_WritePin(GPIOD, GPIO_PIN_5, GPIO_PIN_SET);
 	}
 }
 

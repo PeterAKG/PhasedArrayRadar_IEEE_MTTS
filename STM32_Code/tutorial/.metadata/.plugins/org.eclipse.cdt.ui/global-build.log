@@ -1,22 +1,361 @@
-20:21:22 **** Incremental Build of configuration Debug for project test ****
+02:32:46 **** Incremental Build of configuration Debug for project test ****
 make -j22 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-arm-none-eabi-gcc "../Core/Src/stm32g4xx_it.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32g4xx_it.d" -MT"Core/Src/stm32g4xx_it.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32g4xx_it.o"
-arm-none-eabi-gcc -o "test.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\test\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="test.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+arm-none-eabi-gcc "../Core/Src/stm32g4xx_hal_msp.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32g4xx_hal_msp.d" -MT"Core/Src/stm32g4xx_hal_msp.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32g4xx_hal_msp.o"
+arm-none-eabi-gcc -o "test.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\test\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="test.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: test.elf
  
 arm-none-eabi-size  test.elf 
 arm-none-eabi-objdump -h -S test.elf  > "test.list"
    text	   data	    bss	    dec	    hex	filename
-  41432	     92	  69252	 110776	  1b0b8	test.elf
+  53628	    532	  36516	  90676	  16234	test.elf
 Finished building: default.size.stdout
  
 Finished building: test.list
  
-20:21:34 **** Incremental Build of configuration Debug for project test ****
+02:33:45 **** Incremental Build of configuration Debug for project test ****
 make -j22 all 
 arm-none-eabi-size  test.elf 
    text	   data	    bss	    dec	    hex	filename
-  41432	     92	  69252	 110776	  1b0b8	test.elf
+  53628	    532	  36516	  90676	  16234	test.elf
+Finished building: default.size.stdout
+ 
+02:35:14 **** Incremental Build of configuration Debug for project test ****
+make -j22 all 
+arm-none-eabi-size  test.elf 
+   text	   data	    bss	    dec	    hex	filename
+  53628	    532	  36516	  90676	  16234	test.elf
+Finished building: default.size.stdout
+ 
+02:36:11 **** Incremental Build of configuration Debug for project test ****
+make -j22 all 
+arm-none-eabi-size  test.elf 
+   text	   data	    bss	    dec	    hex	filename
+  53628	    532	  36516	  90676	  16234	test.elf
+Finished building: default.size.stdout
+ 
+02:39:47 **** Incremental Build of configuration Debug for project test ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/stm32g4xx_hal_msp.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32g4xx_hal_msp.d" -MT"Core/Src/stm32g4xx_hal_msp.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32g4xx_hal_msp.o"
+arm-none-eabi-gcc -o "test.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\test\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="test.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: test.elf
+ 
+arm-none-eabi-size  test.elf 
+arm-none-eabi-objdump -h -S test.elf  > "test.list"
+   text	   data	    bss	    dec	    hex	filename
+  53612	    532	  36516	  90660	  16224	test.elf
+Finished building: default.size.stdout
+ 
+Finished building: test.list
+ 
+01:50:46 **** Incremental Build of configuration Debug for project test ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'HAL_ADC_ConvCpltCallback':
+../Core/Src/main.c:1563:39: warning: format '%u' expects argument of type 'unsigned int', but argument 3 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+ 1563 |         sprintf(endMessage, "It took %u clock cycles to read %d times. The midway point occurred at %u clock cycles\r\n", au32_end_ticks - au32_initial_ticks, ADC_BUF_LEN/2, au32_midway_ticks);
+      |                                      ~^                                                                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                                       |                                                                                                  |
+      |                                       unsigned int                                                                                       uint32_t {aka long unsigned int}
+      |                                      %lu
+../Core/Src/main.c:1563:102: warning: format '%u' expects argument of type 'unsigned int', but argument 5 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+ 1563 |         sprintf(endMessage, "It took %u clock cycles to read %d times. The midway point occurred at %u clock cycles\r\n", au32_end_ticks - au32_initial_ticks, ADC_BUF_LEN/2, au32_midway_ticks);
+      |                                                                                                     ~^                                                                        ~~~~~~~~~~~~~~~~~
+      |                                                                                                      |                                                                        |
+      |                                                                                                      unsigned int                                                             uint32_t {aka long unsigned int}
+      |                                                                                                     %lu
+arm-none-eabi-gcc -o "test.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\test\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="test.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: test.elf
+ 
+arm-none-eabi-size  test.elf 
+arm-none-eabi-objdump -h -S test.elf  > "test.list"
+   text	   data	    bss	    dec	    hex	filename
+  53900	    548	  36564	  91012	  16384	test.elf
+Finished building: default.size.stdout
+ 
+Finished building: test.list
+ 
+01:51:11 **** Incremental Build of configuration Debug for project test ****
+make -j22 all 
+arm-none-eabi-size  test.elf 
+   text	   data	    bss	    dec	    hex	filename
+  53900	    548	  36564	  91012	  16384	test.elf
+Finished building: default.size.stdout
+ 
+01:51:47 **** Incremental Build of configuration Debug for project test ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'HAL_ADC_ConvCpltCallback':
+../Core/Src/main.c:1563:39: warning: format '%u' expects argument of type 'unsigned int', but argument 3 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+ 1563 |         sprintf(endMessage, "It took %u clock cycles to read %d times. The midway point occurred at %u clock cycles\r\n", au32_end_ticks - au32_initial_ticks, ADC_BUF_LEN/2, au32_midway_ticks);
+      |                                      ~^                                                                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                                       |                                                                                                  |
+      |                                       unsigned int                                                                                       uint32_t {aka long unsigned int}
+      |                                      %lu
+../Core/Src/main.c:1563:102: warning: format '%u' expects argument of type 'unsigned int', but argument 5 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+ 1563 |         sprintf(endMessage, "It took %u clock cycles to read %d times. The midway point occurred at %u clock cycles\r\n", au32_end_ticks - au32_initial_ticks, ADC_BUF_LEN/2, au32_midway_ticks);
+      |                                                                                                     ~^                                                                        ~~~~~~~~~~~~~~~~~
+      |                                                                                                      |                                                                        |
+      |                                                                                                      unsigned int                                                             uint32_t {aka long unsigned int}
+      |                                                                                                     %lu
+arm-none-eabi-gcc -o "test.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\test\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="test.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: test.elf
+ 
+arm-none-eabi-size  test.elf 
+arm-none-eabi-objdump -h -S test.elf  > "test.list"
+   text	   data	    bss	    dec	    hex	filename
+  53900	    548	  36564	  91012	  16384	test.elf
+Finished building: default.size.stdout
+ 
+Finished building: test.list
+ 
+01:53:00 **** Incremental Build of configuration Debug for project test ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'HAL_ADC_ConvCpltCallback':
+../Core/Src/main.c:1563:39: warning: format '%u' expects argument of type 'unsigned int', but argument 3 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+ 1563 |         sprintf(endMessage, "It took %u clock cycles to read %d times. The midway point occurred at  %u clock cycles\r\n", au32_end_ticks - au32_initial_ticks, ADC_BUF_LEN/2, au32_midway_ticks);
+      |                                      ~^                                                                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                                       |                                                                                                   |
+      |                                       unsigned int                                                                                        uint32_t {aka long unsigned int}
+      |                                      %lu
+../Core/Src/main.c:1563:103: warning: format '%u' expects argument of type 'unsigned int', but argument 5 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+ 1563 |         sprintf(endMessage, "It took %u clock cycles to read %d times. The midway point occurred at  %u clock cycles\r\n", au32_end_ticks - au32_initial_ticks, ADC_BUF_LEN/2, au32_midway_ticks);
+      |                                                                                                      ~^                                                                        ~~~~~~~~~~~~~~~~~
+      |                                                                                                       |                                                                        |
+      |                                                                                                       unsigned int                                                             uint32_t {aka long unsigned int}
+      |                                                                                                      %lu
+arm-none-eabi-gcc -o "test.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\test\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="test.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: test.elf
+ 
+arm-none-eabi-size  test.elf 
+arm-none-eabi-objdump -h -S test.elf  > "test.list"
+   text	   data	    bss	    dec	    hex	filename
+  53900	    548	  36564	  91012	  16384	test.elf
+Finished building: default.size.stdout
+ 
+Finished building: test.list
+ 
+01:53:52 **** Incremental Build of configuration Debug for project test ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'HAL_ADC_ConvCpltCallback':
+../Core/Src/main.c:1563:49: warning: format '%u' expects argument of type 'unsigned int', but argument 3 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+ 1563 |         sprintf(endMessage, "After starting at %u. It took %u clock cycles to read %d times. The midway point occurred at  %u clock cycles\r\n", au32_initial_ticks, au32_end_ticks - au32_initial_ticks, ADC_BUF_LEN/2, au32_midway_ticks);
+      |                                                ~^                                                                                                ~~~~~~~~~~~~~~~~~~
+      |                                                 |                                                                                                |
+      |                                                 unsigned int                                                                                     uint32_t {aka long unsigned int}
+      |                                                %lu
+../Core/Src/main.c:1563:61: warning: format '%u' expects argument of type 'unsigned int', but argument 4 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+ 1563 |         sprintf(endMessage, "After starting at %u. It took %u clock cycles to read %d times. The midway point occurred at  %u clock cycles\r\n", au32_initial_ticks, au32_end_ticks - au32_initial_ticks, ADC_BUF_LEN/2, au32_midway_ticks);
+      |                                                            ~^                                                                                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                                                             |                                                                                                                       |
+      |                                                             unsigned int                                                                                                            uint32_t {aka long unsigned int}
+      |                                                            %lu
+../Core/Src/main.c:1563:125: warning: format '%u' expects argument of type 'unsigned int', but argument 6 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+ 1563 |         sprintf(endMessage, "After starting at %u. It took %u clock cycles to read %d times. The midway point occurred at  %u clock cycles\r\n", au32_initial_ticks, au32_end_ticks - au32_initial_ticks, ADC_BUF_LEN/2, au32_midway_ticks);
+      |                                                                                                                            ~^                                                                                            ~~~~~~~~~~~~~~~~~
+      |                                                                                                                             |                                                                                            |
+      |                                                                                                                             unsigned int                                                                                 uint32_t {aka long unsigned int}
+      |                                                                                                                            %lu
+../Core/Src/main.c:1563:131: warning: ' clock cycles
+   ' directive writing 15 bytes into a region of size between 0 and 5 [-Wformat-overflow=]
+ 1563 |         sprintf(endMessage, "After starting at %u. It took %u clock cycles to read %d times. The midway point occurred at  %u clock cycles\r\n", au32_initial_ticks, au32_end_ticks - au32_initial_ticks, ADC_BUF_LEN/2, au32_midway_ticks);
+      |                                                                                                                              ~~~~~^~~~~~~~~~~~
+../Core/Src/main.c:1563:9: note: 'sprintf' output between 111 and 138 bytes into a destination of size 100
+ 1563 |         sprintf(endMessage, "After starting at %u. It took %u clock cycles to read %d times. The midway point occurred at  %u clock cycles\r\n", au32_initial_ticks, au32_end_ticks - au32_initial_ticks, ADC_BUF_LEN/2, au32_midway_ticks);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "test.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\test\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="test.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: test.elf
+ 
+arm-none-eabi-size  test.elf 
+arm-none-eabi-objdump -h -S test.elf  > "test.list"
+   text	   data	    bss	    dec	    hex	filename
+  53924	    548	  36564	  91036	  1639c	test.elf
+Finished building: default.size.stdout
+ 
+Finished building: test.list
+ 
+01:58:19 **** Incremental Build of configuration Debug for project test ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'HAL_ADC_ConvCpltCallback':
+../Core/Src/main.c:1562:49: warning: format '%u' expects argument of type 'unsigned int', but argument 3 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+ 1562 |         sprintf(endMessage, "After starting at %u. It took %u clock cycles to read %d times. The midway point occurred at  %u clock cycles\r\n", au32_initial_ticks, au32_end_ticks - au32_initial_ticks, ADC_BUF_LEN/2, au32_midway_ticks);
+      |                                                ~^                                                                                                ~~~~~~~~~~~~~~~~~~
+      |                                                 |                                                                                                |
+      |                                                 unsigned int                                                                                     uint32_t {aka long unsigned int}
+      |                                                %lu
+../Core/Src/main.c:1562:61: warning: format '%u' expects argument of type 'unsigned int', but argument 4 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+ 1562 |         sprintf(endMessage, "After starting at %u. It took %u clock cycles to read %d times. The midway point occurred at  %u clock cycles\r\n", au32_initial_ticks, au32_end_ticks - au32_initial_ticks, ADC_BUF_LEN/2, au32_midway_ticks);
+      |                                                            ~^                                                                                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                                                             |                                                                                                                       |
+      |                                                             unsigned int                                                                                                            uint32_t {aka long unsigned int}
+      |                                                            %lu
+../Core/Src/main.c:1562:125: warning: format '%u' expects argument of type 'unsigned int', but argument 6 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+ 1562 |         sprintf(endMessage, "After starting at %u. It took %u clock cycles to read %d times. The midway point occurred at  %u clock cycles\r\n", au32_initial_ticks, au32_end_ticks - au32_initial_ticks, ADC_BUF_LEN/2, au32_midway_ticks);
+      |                                                                                                                            ~^                                                                                            ~~~~~~~~~~~~~~~~~
+      |                                                                                                                             |                                                                                            |
+      |                                                                                                                             unsigned int                                                                                 uint32_t {aka long unsigned int}
+      |                                                                                                                            %lu
+../Core/Src/main.c:1562:131: warning: ' clock cycles
+   ' directive writing 15 bytes into a region of size between 0 and 5 [-Wformat-overflow=]
+ 1562 |         sprintf(endMessage, "After starting at %u. It took %u clock cycles to read %d times. The midway point occurred at  %u clock cycles\r\n", au32_initial_ticks, au32_end_ticks - au32_initial_ticks, ADC_BUF_LEN/2, au32_midway_ticks);
+      |                                                                                                                              ~~~~~^~~~~~~~~~~~
+../Core/Src/main.c:1562:9: note: 'sprintf' output between 111 and 138 bytes into a destination of size 100
+ 1562 |         sprintf(endMessage, "After starting at %u. It took %u clock cycles to read %d times. The midway point occurred at  %u clock cycles\r\n", au32_initial_ticks, au32_end_ticks - au32_initial_ticks, ADC_BUF_LEN/2, au32_midway_ticks);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "test.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\test\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="test.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: test.elf
+ 
+arm-none-eabi-size  test.elf 
+arm-none-eabi-objdump -h -S test.elf  > "test.list"
+   text	   data	    bss	    dec	    hex	filename
+  53924	    548	  36564	  91036	  1639c	test.elf
+Finished building: default.size.stdout
+ 
+Finished building: test.list
+ 
+01:59:07 **** Incremental Build of configuration Debug for project test ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'HAL_ADC_ConvCpltCallback':
+../Core/Src/main.c:1562:134: warning: ' clock cycles
+   ' directive writing 15 bytes into a region of size between 0 and 5 [-Wformat-overflow=]
+ 1562 |         sprintf(endMessage, "After starting at %lu. It took %lu clock cycles to read %d times. The midway point occurred at  %lu clock cycles\r\n", au32_initial_ticks, au32_end_ticks - au32_initial_ticks, ADC_BUF_LEN/2, au32_midway_ticks);
+      |                                                                                                                                 ~~~~~^~~~~~~~~~~~
+../Core/Src/main.c:1562:9: note: 'sprintf' output between 111 and 138 bytes into a destination of size 100
+ 1562 |         sprintf(endMessage, "After starting at %lu. It took %lu clock cycles to read %d times. The midway point occurred at  %lu clock cycles\r\n", au32_initial_ticks, au32_end_ticks - au32_initial_ticks, ADC_BUF_LEN/2, au32_midway_ticks);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "test.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\test\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="test.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: test.elf
+ 
+arm-none-eabi-size  test.elf 
+arm-none-eabi-objdump -h -S test.elf  > "test.list"
+   text	   data	    bss	    dec	    hex	filename
+  53932	    548	  36564	  91044	  163a4	test.elf
+Finished building: default.size.stdout
+ 
+Finished building: test.list
+ 
+02:00:23 **** Incremental Build of configuration Debug for project test ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "test.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\test\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="test.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: test.elf
+ 
+arm-none-eabi-size  test.elf 
+arm-none-eabi-objdump -h -S test.elf  > "test.list"
+   text	   data	    bss	    dec	    hex	filename
+  53932	    548	  36668	  91148	  1640c	test.elf
+Finished building: default.size.stdout
+ 
+Finished building: test.list
+ 
+02:14:50 **** Incremental Build of configuration Debug for project test ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "test.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\test\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="test.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: test.elf
+ 
+arm-none-eabi-size  test.elf 
+arm-none-eabi-objdump -h -S test.elf  > "test.list"
+   text	   data	    bss	    dec	    hex	filename
+  54156	    548	  36668	  91372	  164ec	test.elf
+Finished building: default.size.stdout
+ 
+Finished building: test.list
+ 
+02:15:59 **** Incremental Build of configuration Debug for project test ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "test.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\test\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="test.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: test.elf
+ 
+arm-none-eabi-size  test.elf 
+arm-none-eabi-objdump -h -S test.elf  > "test.list"
+   text	   data	    bss	    dec	    hex	filename
+  54172	    548	  36668	  91388	  164fc	test.elf
+Finished building: default.size.stdout
+ 
+Finished building: test.list
+ 
+02:16:26 **** Incremental Build of configuration Debug for project test ****
+make -j22 all 
+arm-none-eabi-size  test.elf 
+   text	   data	    bss	    dec	    hex	filename
+  54172	    548	  36668	  91388	  164fc	test.elf
+Finished building: default.size.stdout
+ 
+02:17:46 **** Incremental Build of configuration Debug for project test ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'HAL_ADC_ConvCpltCallback':
+../Core/Src/main.c:1569:33: warning: integer overflow in expression of type 'int' results in '-198967296' [-Woverflow]
+ 1569 |         samplingRate =  1000000 * (ADC_BUF_LEN/2) / samplingTime;
+      |                                 ^
+arm-none-eabi-gcc -o "test.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\test\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="test.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: test.elf
+ 
+arm-none-eabi-size  test.elf 
+arm-none-eabi-objdump -h -S test.elf  > "test.list"
+   text	   data	    bss	    dec	    hex	filename
+  54172	    548	  36668	  91388	  164fc	test.elf
+Finished building: default.size.stdout
+ 
+Finished building: test.list
+ 
+02:17:58 **** Incremental Build of configuration Debug for project test ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'HAL_ADC_ConvCpltCallback':
+../Core/Src/main.c:1569:33: warning: integer overflow in expression of type 'int' results in '-198967296' [-Woverflow]
+ 1569 |         samplingRate =  1000000 * (ADC_BUF_LEN/2) / samplingTime;
+      |                                 ^
+arm-none-eabi-gcc -o "test.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\test\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="test.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: test.elf
+ 
+arm-none-eabi-size  test.elf 
+arm-none-eabi-objdump -h -S test.elf  > "test.list"
+   text	   data	    bss	    dec	    hex	filename
+  54196	    548	  36668	  91412	  16514	test.elf
+Finished building: default.size.stdout
+ 
+Finished building: test.list
+ 
+02:18:52 **** Incremental Build of configuration Debug for project test ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "test.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\test\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="test.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: test.elf
+ 
+arm-none-eabi-size  test.elf 
+arm-none-eabi-objdump -h -S test.elf  > "test.list"
+   text	   data	    bss	    dec	    hex	filename
+  54180	    548	  36668	  91396	  16504	test.elf
+Finished building: default.size.stdout
+ 
+Finished building: test.list
+ 
+02:31:25 **** Incremental Build of configuration Debug for project test ****
+make -j22 all 
+arm-none-eabi-size  test.elf 
+   text	   data	    bss	    dec	    hex	filename
+  54180	    548	  36668	  91396	  16504	test.elf
+Finished building: default.size.stdout
+ 
+02:31:55 **** Incremental Build of configuration Debug for project test ****
+make -j22 all 
+arm-none-eabi-size  test.elf 
+   text	   data	    bss	    dec	    hex	filename
+  54180	    548	  36668	  91396	  16504	test.elf
+Finished building: default.size.stdout
+ 
+02:33:01 **** Incremental Build of configuration Debug for project test ****
+make -j22 all 
+arm-none-eabi-size  test.elf 
+   text	   data	    bss	    dec	    hex	filename
+  54180	    548	  36668	  91396	  16504	test.elf
 Finished building: default.size.stdout
  

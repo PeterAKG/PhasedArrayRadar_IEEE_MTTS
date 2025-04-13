@@ -38,10 +38,6 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-uint16_t adc_buf1[2 * ADC_BUF_LEN]; //The reason this is a 16 bit buffer is that we are writing a 32 bit number which contains two different 16 bit values. Instead of writing it to an
-//array of 32 bit numbers with a length of ADC_BUF_LEN, why not write it to an array of 16 bit numbers with a length of ADC_BUF_LEN * 2 to make it easier on our brain?
-
-uint16_t adc_buf3[2 * ADC_BUF_LEN];
 
 /* USER CODE END PM */
 
@@ -55,7 +51,6 @@ DMA_HandleTypeDef hdma_adc3;
 
 DAC_HandleTypeDef hdac1;
 
-OPAMP_HandleTypeDef hopamp3;
 OPAMP_HandleTypeDef hopamp4;
 OPAMP_HandleTypeDef hopamp5;
 
@@ -74,9 +69,30 @@ TIM_HandleTypeDef htim20;
 UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
+uint16_t adc_buf1[2 * ADC_BUF_LEN]; //The reason this is a 16 bit buffer is that we are writing a 32 bit number which contains two different 16 bit values. Instead of writing it to an
+//array of 32 bit numbers with a length of ADC_BUF_LEN, why not write it to an array of 16 bit numbers with a length of ADC_BUF_LEN * 2 to make it easier on our brain?
+uint16_t adc_buf3[2 * ADC_BUF_LEN];
+
+
+
 uint32_t values;
 uint32_t values2;
-char msg[40];
+char msg[30] = "Starting code\r\n";
+char errMsg[15] = "Error in DWT\r\n";
+char msg3[30] = "Beginning transmission...\r\n";
+char bufferNumbers[60];
+char endMessage[200];
+
+uint16_t firstHex;
+uint16_t secondHex;
+uint16_t thirdHex;
+uint16_t fourthHex;
+
+uint8_t delay;
+
+uint32_t au32_initial_ticks;
+uint32_t au32_midway_ticks;
+uint32_t au32_end_ticks;
 
 /* USER CODE END PV */
 
@@ -86,7 +102,6 @@ static void MX_GPIO_Init(void);
 static void MX_DMA_Init(void);
 static void MX_ADC2_Init(void);
 static void MX_DAC1_Init(void);
-static void MX_OPAMP3_Init(void);
 static void MX_OPAMP4_Init(void);
 static void MX_OPAMP5_Init(void);
 static void MX_SPI1_Init(void);
@@ -104,7 +119,7 @@ static void MX_ADC1_Init(void);
 static void MX_ADC3_Init(void);
 static void MX_ADC4_Init(void);
 /* USER CODE BEGIN PFP */
-
+uint32_t DWT_Delay_Init(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -144,7 +159,6 @@ int main(void)
   MX_DMA_Init();
   MX_ADC2_Init();
   MX_DAC1_Init();
-  MX_OPAMP3_Init();
   MX_OPAMP4_Init();
   MX_OPAMP5_Init();
   MX_SPI1_Init();
@@ -163,10 +177,22 @@ int main(void)
   MX_ADC4_Init();
   /* USER CODE BEGIN 2 */
 
+  if(DWT_Delay_Init())
+  {
+	  Error_Handler();
+  }
+
+  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, GPIO_PIN_SET);
+  HAL_Delay(1000);
+  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, GPIO_PIN_RESET);
+
+  HAL_UART_Transmit(&huart1, (uint8_t*) msg, strlen(msg), HAL_MAX_DELAY);
+
+  au32_initial_ticks = DWT->CYCCNT;
   HAL_ADCEx_MultiModeStart_DMA(&hadc1, (uint32_t *) adc_buf1, ADC_BUF_LEN); //I figured out how the dual synchronous simultaneous mode works, but it broke randomly. For some reason, it is only writing the value of one channel to
   //the buffer. I have no idea why.
 
-  HAL_ADCEx_MultiModeStart_DMA(&hadc3, (uint32_t *) adc_buf3, ADC_BUF_LEN);
+  //HAL_ADCEx_MultiModeStart_DMA(&hadc3, (uint32_t *) adc_buf3, ADC_BUF_LEN);
 
   //HAL_ADCEx_MultiModeStart_DMA(&hadc3, adc_buf3, ADC_BUF_LEN);
 
@@ -176,13 +202,24 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  HAL_Delay(100);
+	  HAL_Delay(1000);
 
 	  values = HAL_ADCEx_MultiModeGetValue(&hadc1);
-	  values2 = HAL_ADCEx_MultiModeGetValue(&hadc3);
+	  //values2 = HAL_ADCEx_MultiModeGetValue(&hadc3);
+	  values2 = 123123;
 
-	  sprintf(msg, "1: %lx \r\n2: %lx \r\n", values, values2);
-	  HAL_UART_Transmit(&huart1, (uint8_t*) msg, strlen(msg), HAL_MAX_DELAY);
+	  //Basically what's happening is that the buffers themselves are not aligned but calling these functions right next to each other aligns the data points I sample to be basically the same value. I need to figure out
+	  //a way to align the buffers, or maybe thats unncessary? I just need to figure out how to know which groups of four samples correlate with each other.
+
+	  firstHex = values/0x10000;
+	  secondHex = values % 0x10000;
+
+	  thirdHex = values2/0x10000;
+	  fourthHex = values2 % 0x10000;
+
+	  //sprintf(msg, "%u,%u,%u,%u,%u\r\n", values, firstHex, secondHex, thirdHex, fourthHex);
+	  //sprintf(msg, "1: %x\r\n2: %x\r\n", values, values2);
+	  //HAL_UART_Transmit(&huart1, (uint8_t*) msg, strlen(msg), HAL_MAX_DELAY);
 
 	  //HAL_Delay(1000);
 
@@ -280,7 +317,7 @@ static void MX_ADC1_Init(void)
   */
   multimode.Mode = ADC_DUALMODE_REGSIMULT;
   multimode.DMAAccessMode = ADC_DMAACCESSMODE_12_10_BITS;
-  multimode.TwoSamplingDelay = ADC_TWOSAMPLINGDELAY_1CYCLE;
+  multimode.TwoSamplingDelay = ADC_TWOSAMPLINGDELAY_12CYCLES;
   if (HAL_ADCEx_MultiModeConfigChannel(&hadc1, &multimode) != HAL_OK)
   {
     Error_Handler();
@@ -383,7 +420,7 @@ static void MX_ADC3_Init(void)
   /** Common config
   */
   hadc3.Instance = ADC3;
-  hadc3.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV2;
+  hadc3.Init.ClockPrescaler = ADC_CLOCK_ASYNC_DIV64;
   hadc3.Init.Resolution = ADC_RESOLUTION_12B;
   hadc3.Init.DataAlign = ADC_DATAALIGN_RIGHT;
   hadc3.Init.GainCompensation = 0;
@@ -407,7 +444,7 @@ static void MX_ADC3_Init(void)
   */
   multimode.Mode = ADC_DUALMODE_REGSIMULT;
   multimode.DMAAccessMode = ADC_DMAACCESSMODE_12_10_BITS;
-  multimode.TwoSamplingDelay = ADC_TWOSAMPLINGDELAY_1CYCLE;
+  multimode.TwoSamplingDelay = ADC_TWOSAMPLINGDELAY_12CYCLES;
   if (HAL_ADCEx_MultiModeConfigChannel(&hadc3, &multimode) != HAL_OK)
   {
     Error_Handler();
@@ -452,7 +489,7 @@ static void MX_ADC4_Init(void)
   /** Common config
   */
   hadc4.Instance = ADC4;
-  hadc4.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV2;
+  hadc4.Init.ClockPrescaler = ADC_CLOCK_ASYNC_DIV64;
   hadc4.Init.Resolution = ADC_RESOLUTION_12B;
   hadc4.Init.DataAlign = ADC_DATAALIGN_RIGHT;
   hadc4.Init.GainCompensation = 0;
@@ -529,49 +566,9 @@ static void MX_DAC1_Init(void)
   {
     Error_Handler();
   }
-
-  /** DAC channel OUT2 config
-  */
-  if (HAL_DAC_ConfigChannel(&hdac1, &sConfig, DAC_CHANNEL_2) != HAL_OK)
-  {
-    Error_Handler();
-  }
   /* USER CODE BEGIN DAC1_Init 2 */
 
   /* USER CODE END DAC1_Init 2 */
-
-}
-
-/**
-  * @brief OPAMP3 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_OPAMP3_Init(void)
-{
-
-  /* USER CODE BEGIN OPAMP3_Init 0 */
-
-  /* USER CODE END OPAMP3_Init 0 */
-
-  /* USER CODE BEGIN OPAMP3_Init 1 */
-
-  /* USER CODE END OPAMP3_Init 1 */
-  hopamp3.Instance = OPAMP3;
-  hopamp3.Init.PowerMode = OPAMP_POWERMODE_NORMALSPEED;
-  hopamp3.Init.Mode = OPAMP_STANDALONE_MODE;
-  hopamp3.Init.InvertingInput = OPAMP_INVERTINGINPUT_IO0;
-  hopamp3.Init.NonInvertingInput = OPAMP_NONINVERTINGINPUT_IO0;
-  hopamp3.Init.InternalOutput = DISABLE;
-  hopamp3.Init.TimerControlledMuxmode = OPAMP_TIMERCONTROLLEDMUXMODE_DISABLE;
-  hopamp3.Init.UserTrimming = OPAMP_TRIMMING_FACTORY;
-  if (HAL_OPAMP_Init(&hopamp3) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN OPAMP3_Init 2 */
-
-  /* USER CODE END OPAMP3_Init 2 */
 
 }
 
@@ -1495,19 +1492,11 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(BUTTON_RESET_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : M1_VOLT_V_ADC345_IN16_Pin */
-  GPIO_InitStruct.Pin = M1_VOLT_V_ADC345_IN16_Pin;
+  /*Configure GPIO pins : PB0 PB1 */
+  GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1;
   GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(M1_VOLT_V_ADC345_IN16_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : ADC45_IN12_PFC_Current1_Pin ADC45_IN13_PFC_Current2_Pin M1_VOLT_U_ADC345_IN7_Pin M1_CURR_U_ADC345_IN8_Pin
-                           M1_CURR_V_ADC345_IN9_Pin M1_VOLT_W_ADC345_IN10_Pin M1_CURR_W_ADC345_IN11_Pin */
-  GPIO_InitStruct.Pin = ADC45_IN12_PFC_Current1_Pin|ADC45_IN13_PFC_Current2_Pin|M1_VOLT_U_ADC345_IN7_Pin|M1_CURR_U_ADC345_IN8_Pin
-                          |M1_CURR_V_ADC345_IN9_Pin|M1_VOLT_W_ADC345_IN10_Pin|M1_CURR_W_ADC345_IN11_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /*Configure GPIO pin : M3_ENABLE1_GPIO_Pin */
   GPIO_InitStruct.Pin = M3_ENABLE1_GPIO_Pin;
@@ -1538,36 +1527,94 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 //Called when first half of buffer is filled
 void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef* hadc){
-	if(hadc->DMA_Handle->Instance == DMA1_Channel4)
-	{
-	 HAL_GPIO_WritePin(GPIOF, GPIO_PIN_3, GPIO_PIN_SET);
-	}
-	else if (hadc->DMA_Handle->Instance == DMA2_Channel1)
-	{
-	 HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, GPIO_PIN_SET);
-	}
-	else
-	{
-     HAL_GPIO_WritePin(GPIOD, GPIO_PIN_5, GPIO_PIN_SET);
-	}
+	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, GPIO_PIN_SET);
+	au32_midway_ticks = DWT->CYCCNT;
+
+
+	//else if (hadc->DMA_Handle->Instance == DMA2_Channel1)
+	//{
+	//sprintf(msg2, "Hello! I am from ADC 2\r\n");
+	//}
+
+	//else if (hadc->DMA_Handle->Instance == DMA2_Channel1)
+	//{
+	// HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, GPIO_PIN_SET);
+	//}
+	//else
+	//{
+    // HAL_GPIO_WritePin(GPIOD, GPIO_PIN_5, GPIO_PIN_SET);
+	//}
 }
 
 //Called when buffer is completely filled
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc){
-	if(hadc->DMA_Handle->Instance == DMA1_Channel4)
+	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, GPIO_PIN_RESET);
+	au32_end_ticks = DWT->CYCCNT;
+
+	HAL_UART_Transmit(&huart1, (uint8_t*) msg3, strlen(msg3), HAL_MAX_DELAY);
+
+	for(int j = 0; j < ADC_BUF_LEN; j += 2)
 	{
-	 HAL_GPIO_WritePin(GPIOF, GPIO_PIN_3, GPIO_PIN_SET);
+		sprintf(bufferNumbers, "%u,%u\r\n", adc_buf1[j], adc_buf1[j + 1]);
+		HAL_UART_Transmit(&huart1, (uint8_t*) bufferNumbers, strlen(bufferNumbers), HAL_MAX_DELAY);
 	}
-	else if (hadc->DMA_Handle->Instance == DMA2_Channel1)
-	{
-	 HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, GPIO_PIN_SET);
-	}
-	else
-	{
-     HAL_GPIO_WritePin(GPIOD, GPIO_PIN_5, GPIO_PIN_SET);
-	}
+
+	sprintf(endMessage, "After starting at %lu. It took %lu clock cycles to read %d times. The midway point occurred at  %lu clock cycles\r\n", au32_initial_ticks, au32_end_ticks - au32_initial_ticks, ADC_BUF_LEN/2, au32_midway_ticks);
+	HAL_UART_Transmit(&huart1, (uint8_t*) endMessage, strlen(endMessage), HAL_MAX_DELAY);
+
+	float samplingTime;
+	samplingTime = (float) (au32_end_ticks - au32_initial_ticks)/HAL_RCC_GetHCLKFreq() * 1000000;
+
+	double samplingRate;
+	samplingRate = (ADC_BUF_LEN/2) / samplingTime;
+
+	sprintf(endMessage, "It took %1.3f microseconds to read %d times, corresponding to a sampling  rate of %1.2lf MSPS\r\n", samplingTime, ADC_BUF_LEN/2, samplingRate);
+
+	HAL_UART_Transmit(&huart1, (uint8_t*) endMessage, strlen(endMessage), HAL_MAX_DELAY);
+
+
+
+	//HAL_UART_Transmit(&huart1, (uint8_t*) msg2, strlen(msg2), HAL_MAX_DELAY);
+	//else if (hadc->DMA_Handle->Instance == DMA2_Channel1)
+	//{
+	 //HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, GPIO_PIN_SET);
+	//}
+	//else
+	//{
+    // HAL_GPIO_WritePin(GPIOD, GPIO_PIN_5, GPIO_PIN_SET);
+	//}
 }
 
+uint32_t DWT_Delay_Init(void)
+{
+    /* Disable TRC */
+    CoreDebug->DEMCR &= ~CoreDebug_DEMCR_TRCENA_Msk; // ~0x01000000;
+    /* Enable TRC */
+    CoreDebug->DEMCR |=  CoreDebug_DEMCR_TRCENA_Msk; // 0x01000000;
+
+    /* Disable clock cycle counter */
+    DWT->CTRL &= ~DWT_CTRL_CYCCNTENA_Msk; //~0x00000001;
+    /* Enable  clock cycle counter */
+    DWT->CTRL |=  DWT_CTRL_CYCCNTENA_Msk; //0x00000001;
+
+    /* Reset the clock cycle counter value */
+    DWT->CYCCNT = 0;
+
+    /* 3 NO OPERATION instructions */
+    __ASM volatile ("NOP");
+    __ASM volatile ("NOP");
+    __ASM volatile ("NOP");
+
+    /* Check if clock cycle counter has started */
+    if(DWT->CYCCNT)
+    {
+       return 0; /*clock cycle counter started*/
+    }
+    else
+    {
+      return 1; /*clock cycle counter not started*/
+    }
+}
 /* USER CODE END 4 */
 
 /**
@@ -1581,6 +1628,7 @@ void Error_Handler(void)
   __disable_irq();
   while (1)
   {
+	HAL_UART_Transmit(&huart1, (uint8_t*) errMsg, strlen(errMsg), HAL_MAX_DELAY);
   }
   /* USER CODE END Error_Handler_Debug */
 }

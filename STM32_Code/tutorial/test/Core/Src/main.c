@@ -90,9 +90,17 @@ uint16_t fourthHex;
 
 uint8_t delay;
 
-uint32_t au32_initial_ticks;
-uint32_t au32_midway_ticks;
-uint32_t au32_end_ticks;
+uint32_t au32_initial_ticksADC1 = 0;
+uint32_t au32_midway_ticksADC1 = 0;
+uint32_t au32_end_ticksADC1 = 0;
+
+uint32_t au32_initial_ticksADC3 = 0;
+uint32_t au32_midway_ticksADC3 = 0;
+uint32_t au32_end_ticksADC3 = 0;
+
+uint16_t numOfConversions = 0;
+uint16_t indexStoppedADC1 = 0;
+uint16_t indexStoppedADC3 = 0;
 
 /* USER CODE END PV */
 
@@ -182,17 +190,13 @@ int main(void)
 	  Error_Handler();
   }
 
-  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, GPIO_PIN_SET);
-  HAL_Delay(1000);
-  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, GPIO_PIN_RESET);
-
   HAL_UART_Transmit(&huart1, (uint8_t*) msg, strlen(msg), HAL_MAX_DELAY);
 
-  au32_initial_ticks = DWT->CYCCNT;
+  au32_initial_ticksADC1 = DWT->CYCCNT;
   HAL_ADCEx_MultiModeStart_DMA(&hadc1, (uint32_t *) adc_buf1, ADC_BUF_LEN); //I figured out how the dual synchronous simultaneous mode works, but it broke randomly. For some reason, it is only writing the value of one channel to
   //the buffer. I have no idea why.
 
-  //HAL_ADCEx_MultiModeStart_DMA(&hadc3, (uint32_t *) adc_buf3, ADC_BUF_LEN);
+  HAL_ADCEx_MultiModeStart_DMA(&hadc3, (uint32_t *) adc_buf3, ADC_BUF_LEN);
 
   //HAL_ADCEx_MultiModeStart_DMA(&hadc3, adc_buf3, ADC_BUF_LEN);
 
@@ -202,28 +206,59 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  //I disabled DMA continuous conversion mode and now nothing works. When I had it enabled DMA was over-running. I don't know why or even what this function really does.
+	  //I think I might be trying to do too much without knowing enough. Maybe I should read more before trying to troubleshoot. I am mainly relying on STM32 forum boards, but
+	  //a lot of them make references to manuals I am clueless about or how to find. I think I might need to slow down and actually take time to understand what I am doing.
+
 	  HAL_Delay(1000);
 
-	  values = HAL_ADCEx_MultiModeGetValue(&hadc1);
-	  //values2 = HAL_ADCEx_MultiModeGetValue(&hadc3);
-	  values2 = 123123;
+	if(indexStoppedADC1)
+	{
+		HAL_UART_Transmit(&huart1, (uint8_t*) msg3, strlen(msg3), HAL_MAX_DELAY);
 
-	  //Basically what's happening is that the buffers themselves are not aligned but calling these functions right next to each other aligns the data points I sample to be basically the same value. I need to figure out
-	  //a way to align the buffers, or maybe thats unncessary? I just need to figure out how to know which groups of four samples correlate with each other.
+		for(int j = 0; j < ADC_BUF_LEN; j += 2)
+		{
+			sprintf(bufferNumbers, "%u,%u\r\n", adc_buf1[j], adc_buf1[j + 1]);
+			HAL_UART_Transmit(&huart1, (uint8_t*) bufferNumbers, strlen(bufferNumbers), HAL_MAX_DELAY);
+		}
 
-	  firstHex = values/0x10000;
-	  secondHex = values % 0x10000;
+		sprintf(endMessage, "After starting at %lu. It took %lu clock cycles to read %d times. The midway point occurred at  %lu clock cycles\r\n", au32_initial_ticksADC1, au32_end_ticksADC1 - au32_initial_ticksADC1, ADC_BUF_LEN/2, au32_midway_ticksADC1);
+		HAL_UART_Transmit(&huart1, (uint8_t*) endMessage, strlen(endMessage), HAL_MAX_DELAY);
 
-	  thirdHex = values2/0x10000;
-	  fourthHex = values2 % 0x10000;
+		float samplingTime;
+		samplingTime = (float) (au32_end_ticksADC1 - au32_initial_ticksADC1)/HAL_RCC_GetHCLKFreq() * 1000000;
 
-	  //sprintf(msg, "%u,%u,%u,%u,%u\r\n", values, firstHex, secondHex, thirdHex, fourthHex);
-	  //sprintf(msg, "1: %x\r\n2: %x\r\n", values, values2);
-	  //HAL_UART_Transmit(&huart1, (uint8_t*) msg, strlen(msg), HAL_MAX_DELAY);
+		double samplingRate;
+		samplingRate = (ADC_BUF_LEN/2) / samplingTime;
 
-	  //HAL_Delay(1000);
+		sprintf(endMessage, "It took %1.3f microseconds to read %d times, corresponding to a sampling  rate of %1.2lf MSPS. Index: %u. ADC1\r\n", samplingTime, ADC_BUF_LEN/2, samplingRate, indexStoppedADC1);
 
+		HAL_UART_Transmit(&huart1, (uint8_t*) endMessage, strlen(endMessage), HAL_MAX_DELAY);
+	}
 
+	if(indexStoppedADC3)
+	{
+		HAL_UART_Transmit(&huart1, (uint8_t*) msg3, strlen(msg3), HAL_MAX_DELAY);
+
+		for(int j = 0; j < ADC_BUF_LEN; j += 2)
+		{
+			sprintf(bufferNumbers, "%u,%u\r\n", adc_buf1[j], adc_buf1[j + 1]);
+			HAL_UART_Transmit(&huart1, (uint8_t*) bufferNumbers, strlen(bufferNumbers), HAL_MAX_DELAY);
+		}
+
+		sprintf(endMessage, "After starting at %lu. It took %lu clock cycles to read %d times. The midway point occurred at  %lu clock cycles\r\n", au32_initial_ticksADC1, au32_end_ticksADC1 - au32_initial_ticksADC1, ADC_BUF_LEN/2, au32_midway_ticksADC1);
+		HAL_UART_Transmit(&huart1, (uint8_t*) endMessage, strlen(endMessage), HAL_MAX_DELAY);
+
+		float samplingTime;
+		samplingTime = (float) (au32_end_ticksADC1 - au32_initial_ticksADC1)/HAL_RCC_GetHCLKFreq() * 1000000;
+
+		double samplingRate;
+		samplingRate = (ADC_BUF_LEN/2) / samplingTime;
+
+		sprintf(endMessage, "It took %1.3f microseconds to read %d times, corresponding to a sampling  rate of %1.2lf MSPS. Index: %u. ADC3\r\n", samplingTime, ADC_BUF_LEN/2, samplingRate, indexStoppedADC3);
+
+		HAL_UART_Transmit(&huart1, (uint8_t*) endMessage, strlen(endMessage), HAL_MAX_DELAY);
+	}
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -1527,62 +1562,39 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 //Called when first half of buffer is filled
 void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef* hadc){
-	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, GPIO_PIN_SET);
-	au32_midway_ticks = DWT->CYCCNT;
 
-
-	//else if (hadc->DMA_Handle->Instance == DMA2_Channel1)
-	//{
-	//sprintf(msg2, "Hello! I am from ADC 2\r\n");
-	//}
-
-	//else if (hadc->DMA_Handle->Instance == DMA2_Channel1)
-	//{
-	// HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, GPIO_PIN_SET);
-	//}
-	//else
-	//{
-    // HAL_GPIO_WritePin(GPIOD, GPIO_PIN_5, GPIO_PIN_SET);
-	//}
+	if(hadc->DMA_Handle->Instance == DMA1_Channel4)
+	{
+		au32_midway_ticksADC1 = DWT->CYCCNT;
+	} else if (hadc->DMA_Handle->Instance == DMA2_Channel1)
+	{
+		au32_midway_ticksADC3 = DWT->CYCCNT;
+	}
 }
 
 //Called when buffer is completely filled
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc){
-	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, GPIO_PIN_RESET);
-	au32_end_ticks = DWT->CYCCNT;
 
-	HAL_UART_Transmit(&huart1, (uint8_t*) msg3, strlen(msg3), HAL_MAX_DELAY);
-
-	for(int j = 0; j < ADC_BUF_LEN; j += 2)
+	if(hadc->DMA_Handle->Instance == DMA1_Channel4)
 	{
-		sprintf(bufferNumbers, "%u,%u\r\n", adc_buf1[j], adc_buf1[j + 1]);
-		HAL_UART_Transmit(&huart1, (uint8_t*) bufferNumbers, strlen(bufferNumbers), HAL_MAX_DELAY);
+		au32_end_ticksADC1 = DWT->CYCCNT;
+	} else if (hadc->DMA_Handle->Instance == DMA2_Channel1)
+	{
+		au32_end_ticksADC3 = DWT->CYCCNT;
 	}
+	numOfConversions++;
 
-	sprintf(endMessage, "After starting at %lu. It took %lu clock cycles to read %d times. The midway point occurred at  %lu clock cycles\r\n", au32_initial_ticks, au32_end_ticks - au32_initial_ticks, ADC_BUF_LEN/2, au32_midway_ticks);
-	HAL_UART_Transmit(&huart1, (uint8_t*) endMessage, strlen(endMessage), HAL_MAX_DELAY);
-
-	float samplingTime;
-	samplingTime = (float) (au32_end_ticks - au32_initial_ticks)/HAL_RCC_GetHCLKFreq() * 1000000;
-
-	double samplingRate;
-	samplingRate = (ADC_BUF_LEN/2) / samplingTime;
-
-	sprintf(endMessage, "It took %1.3f microseconds to read %d times, corresponding to a sampling  rate of %1.2lf MSPS\r\n", samplingTime, ADC_BUF_LEN/2, samplingRate);
-
-	HAL_UART_Transmit(&huart1, (uint8_t*) endMessage, strlen(endMessage), HAL_MAX_DELAY);
-
-
-
-	//HAL_UART_Transmit(&huart1, (uint8_t*) msg2, strlen(msg2), HAL_MAX_DELAY);
-	//else if (hadc->DMA_Handle->Instance == DMA2_Channel1)
-	//{
-	 //HAL_GPIO_WritePin(GPIOD, GPIO_PIN_6, GPIO_PIN_SET);
-	//}
-	//else
-	//{
-    // HAL_GPIO_WritePin(GPIOD, GPIO_PIN_5, GPIO_PIN_SET);
-	//}
+	if(numOfConversions > 65000)
+	{
+		if(hadc->DMA_Handle->Instance == DMA1_Channel4)
+		{
+			indexStoppedADC1 = numOfConversions;
+		} else if (hadc->DMA_Handle->Instance == DMA2_Channel1)
+		{
+			indexStoppedADC3 = numOfConversions;
+		}
+		HAL_ADCEx_MultiModeStop_DMA(hadc);
+	}
 }
 
 uint32_t DWT_Delay_Init(void)

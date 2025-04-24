@@ -33,7 +33,12 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define ADC_BUF_LEN 8192
+#define ADC_BUF_LEN 2048
+
+#define ARM_MATH_CM7
+#include "arm_math.h"
+
+#define ADC_MAX 2048
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -74,15 +79,15 @@ uint16_t adc_buf1[2 * ADC_BUF_LEN]; //The reason this is a 16 bit buffer is that
 uint16_t adc_buf3[2 * ADC_BUF_LEN];
 
 
-
 uint32_t values;
 uint32_t values2;
 char msg[30] = "Starting code\r\n";
 char errMsg[15] = "Error in DWT\r\n";
 char msg3[30] = "Beginning transmission...\r\n";
-char bufferNumbers[60];
-char endMessage[200];
+uint32_t samplingFreq;
 
+
+/*
 uint16_t firstHex;
 uint16_t secondHex;
 uint16_t thirdHex;
@@ -101,6 +106,32 @@ uint32_t au32_end_ticksADC3 = 0;
 uint16_t numOfConversions = 0;
 uint16_t indexStoppedADC1 = 0;
 uint16_t indexStoppedADC3 = 0;
+*/
+
+uint32_t au32_initial_ticksADC1 = 0;
+uint32_t au32_midway_ticksADC1 = 0;
+uint32_t au32_end_ticksADC1 = 0;
+
+uint32_t au32_initial_ticksADC3 = 0;
+uint32_t au32_midway_ticksADC3 = 0;
+uint32_t au32_end_ticksADC3 = 0;
+
+arm_rfft_fast_instance_f32 fftHandler;
+
+float32_t fftBufInADC1[ADC_BUF_LEN];
+float32_t fftBufOutADC1[ADC_BUF_LEN];
+
+float32_t fftBufInADC2[ADC_BUF_LEN];
+float32_t fftBufOutADC2[ADC_BUF_LEN];
+
+float32_t fftBufInADC3[ADC_BUF_LEN];
+float32_t fftBufOutADC3[ADC_BUF_LEN];
+
+float32_t fftBufInADC4[ADC_BUF_LEN];
+float32_t fftBufOutADC4[ADC_BUF_LEN];
+
+uint8_t fftFlagADC12 = 0;
+uint8_t fftFlagADC34 = 0;
 
 /* USER CODE END PV */
 
@@ -128,6 +159,7 @@ static void MX_ADC3_Init(void);
 static void MX_ADC4_Init(void);
 /* USER CODE BEGIN PFP */
 uint32_t DWT_Delay_Init(void);
+void Process_HalfBuffer(ADC_HandleTypeDef* hadc, int cycle);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -152,6 +184,13 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
+  char bufferNumbers[60];
+  const char FFT1[30] = "ADC12 Triggered\r\n";
+  const char FFT3[30] = "ADC34 Triggered\r\n";
+  const char endFFT[30] = "Finished Transmission\r\n";
+  uint32_t frequency;
+  char endMessage[200];
+
 
   /* USER CODE END Init */
 
@@ -190,13 +229,18 @@ int main(void)
 	  Error_Handler();
   }
 
+  /*
   HAL_UART_Transmit(&huart1, (uint8_t*) msg, strlen(msg), HAL_MAX_DELAY);
+  */
 
-  au32_initial_ticksADC1 = DWT->CYCCNT;
+  //au32_initial_ticksADC1 = DWT->CYCCNT;
+
+  arm_rfft_fast_init_f32(&fftHandler, ADC_BUF_LEN);
+
   HAL_ADCEx_MultiModeStart_DMA(&hadc1, (uint32_t *) adc_buf1, ADC_BUF_LEN); //I figured out how the dual synchronous simultaneous mode works, but it broke randomly. For some reason, it is only writing the value of one channel to
   //the buffer. I have no idea why.
 
-  HAL_ADCEx_MultiModeStart_DMA(&hadc3, (uint32_t *) adc_buf3, ADC_BUF_LEN);
+  //HAL_ADCEx_MultiModeStart_DMA(&hadc3, (uint32_t *) adc_buf3, ADC_BUF_LEN);
 
   //HAL_ADCEx_MultiModeStart_DMA(&hadc3, adc_buf3, ADC_BUF_LEN);
 
@@ -212,6 +256,8 @@ int main(void)
 
 	  HAL_Delay(1000);
 
+
+	  /*
 	if(indexStoppedADC1)
 	{
 		HAL_UART_Transmit(&huart1, (uint8_t*) msg3, strlen(msg3), HAL_MAX_DELAY);
@@ -236,6 +282,23 @@ int main(void)
 		HAL_UART_Transmit(&huart1, (uint8_t*) endMessage, strlen(endMessage), HAL_MAX_DELAY);
 	}
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	if(indexStoppedADC3)
 	{
 		HAL_UART_Transmit(&huart1, (uint8_t*) msg3, strlen(msg3), HAL_MAX_DELAY);
@@ -259,6 +322,47 @@ int main(void)
 
 		HAL_UART_Transmit(&huart1, (uint8_t*) endMessage, strlen(endMessage), HAL_MAX_DELAY);
 	}
+		  */
+
+	//Now that I have the DSP Library installed and the ADCs working properly. All that is left to do is to call an FFT on the data I collected and see if it actually works :)
+	if(fftFlagADC12)
+	{
+		HAL_UART_Transmit(&huart1, (uint8_t*) FFT1, strlen(FFT1), HAL_MAX_DELAY);
+
+		for(int j = 0; j < ADC_BUF_LEN; j += 2)
+		{
+			frequency = j * samplingFreq / (ADC_BUF_LEN);
+ 			sprintf(bufferNumbers, "%lf,%lf,%u, %d\r\n", fftBufOutADC1[j],fftBufOutADC1[j + 1], frequency, j);
+			HAL_UART_Transmit(&huart1, (uint8_t*) bufferNumbers, strlen(bufferNumbers), HAL_MAX_DELAY);
+		}
+
+		HAL_UART_Transmit(&huart1, (uint8_t*) endFFT, strlen(endFFT), HAL_MAX_DELAY);
+
+		sprintf(endMessage, "After starting at %lu. It took %lu clock cycles to read %d times. The midway point occurred at  %lu clock cycles\r\n", au32_initial_ticksADC1, au32_end_ticksADC1 - au32_initial_ticksADC1, ADC_BUF_LEN/2, au32_midway_ticksADC1);
+		HAL_UART_Transmit(&huart1, (uint8_t*) endMessage, strlen(endMessage), HAL_MAX_DELAY);
+
+
+		float samplingTime;
+		samplingTime = (float) (au32_end_ticksADC1 - au32_initial_ticksADC1)/HAL_RCC_GetHCLKFreq() * 1000000;
+
+		double samplingRate;
+		samplingRate = (ADC_BUF_LEN) / samplingTime;
+
+		sprintf(endMessage, "It took %1.3f microseconds to read %d times, corresponding to a sampling  rate of %1.6lf MSPS ADC1\r\n", samplingTime, ADC_BUF_LEN, samplingRate);
+		HAL_UART_Transmit(&huart1, (uint8_t*) endMessage, strlen(endMessage), HAL_MAX_DELAY);
+
+		HAL_Delay(1000);
+		break; //MAKE SURE TO REMOVE THIS. I am just including it because I want to keep UART clear after 1st execution
+	}
+
+	if(fftFlagADC34)
+	{
+		HAL_UART_Transmit(&huart1, (uint8_t*) FFT3, strlen(FFT3), HAL_MAX_DELAY);
+	}
+
+
+
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -371,6 +475,65 @@ static void MX_ADC1_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN ADC1_Init 2 */
+
+
+  //It looks like (both experimentally and from the data sheet) that the two sampling delay is completely useless and has
+  //nothing to do with what we are doing. It is only used in dual interleave mode.
+  uint8_t resolution = 0;
+  float samplingTime = 0;
+  uint32_t fADC = 0;
+
+  if (hadc1.Init.Resolution == ADC_RESOLUTION_6B)
+  {
+	  resolution = 6;
+  } else if (hadc1.Init.Resolution == ADC_RESOLUTION_8B)
+  {
+	  resolution = 8;
+  } else if (hadc1.Init.Resolution == ADC_RESOLUTION_10B)
+  {
+	  resolution = 10;
+  } else if (hadc1.Init.Resolution == ADC_RESOLUTION_12B)
+  {
+	  resolution = 12;
+  }
+
+  switch (sConfig.SamplingTime) {
+    case ADC_SAMPLETIME_2CYCLES_5:  samplingTime =  2.5f; break;
+    case ADC_SAMPLETIME_6CYCLES_5:  samplingTime =  6.5f; break;
+    case ADC_SAMPLETIME_12CYCLES_5: samplingTime = 12.5f; break;
+    case ADC_SAMPLETIME_24CYCLES_5: samplingTime = 24.5f; break;
+    case ADC_SAMPLETIME_47CYCLES_5: samplingTime = 47.5f; break;
+    case ADC_SAMPLETIME_92CYCLES_5: samplingTime = 92.5f; break;
+    case ADC_SAMPLETIME_247CYCLES_5: samplingTime = 247.5f; break;
+    case ADC_SAMPLETIME_640CYCLES_5: samplingTime = 640.5f; break;
+    default:                        samplingTime =  2.5f; break;
+  }
+
+  if (hadc1.Init.ClockPrescaler == ADC_CLOCK_SYNC_PCLK_DIV1)
+  {
+	  fADC =  HAL_RCC_GetSysClockFreq();
+  } else if (hadc1.Init.ClockPrescaler == ADC_CLOCK_SYNC_PCLK_DIV2)
+  {
+	  fADC = HAL_RCC_GetSysClockFreq()/2;
+  } else if (hadc1.Init.ClockPrescaler == ADC_CLOCK_SYNC_PCLK_DIV4)
+  {
+	  fADC = HAL_RCC_GetSysClockFreq()/4;
+  }
+
+
+  if (hadc1.Init.ClockPrescaler == ADC_CLOCK_SYNC_PCLK_DIV1)
+  {
+	  fADC =  HAL_RCC_GetPCLK2Freq();
+  } else if (hadc1.Init.ClockPrescaler == ADC_CLOCK_SYNC_PCLK_DIV2)
+  {
+	  fADC = HAL_RCC_GetPCLK2Freq()/2;
+  } else if (hadc1.Init.ClockPrescaler == ADC_CLOCK_SYNC_PCLK_DIV4)
+  {
+	  fADC = HAL_RCC_GetPCLK2Freq()/4;
+  }
+
+  samplingFreq = 0.5 * fADC / (samplingTime + resolution + 0.5); //For some mystery reason I need to divide by two to get the true sampling frequency
+  //(probably has something to do with dual simultaneous mode)
 
   /* USER CODE END ADC1_Init 2 */
 
@@ -1563,6 +1726,7 @@ static void MX_GPIO_Init(void)
 //Called when first half of buffer is filled
 void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef* hadc){
 
+
 	if(hadc->DMA_Handle->Instance == DMA1_Channel4)
 	{
 		au32_midway_ticksADC1 = DWT->CYCCNT;
@@ -1570,10 +1734,14 @@ void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef* hadc){
 	{
 		au32_midway_ticksADC3 = DWT->CYCCNT;
 	}
+
+
+	Process_HalfBuffer(hadc, 1);
 }
 
 //Called when buffer is completely filled
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc){
+
 
 	if(hadc->DMA_Handle->Instance == DMA1_Channel4)
 	{
@@ -1582,8 +1750,12 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc){
 	{
 		au32_end_ticksADC3 = DWT->CYCCNT;
 	}
-	numOfConversions++;
 
+
+
+	//numOfConversions++;
+
+	/*
 	if(numOfConversions > 65000)
 	{
 		if(hadc->DMA_Handle->Instance == DMA1_Channel4)
@@ -1595,6 +1767,10 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc){
 		}
 		HAL_ADCEx_MultiModeStop_DMA(hadc);
 	}
+	*/
+
+
+	Process_HalfBuffer(hadc, 2);
 }
 
 uint32_t DWT_Delay_Init(void)
@@ -1627,6 +1803,88 @@ uint32_t DWT_Delay_Init(void)
       return 1; /*clock cycle counter not started*/
     }
 }
+
+void Process_HalfBuffer(ADC_HandleTypeDef* hadc, int cycle) { //If cycle = 1 we are dealing with the first half of the input buffer, if cycle = 2 then the second half
+
+	static float leftIn, rightIn;
+
+	uint16_t* integerBuffer;
+
+	static uint16_t fftIndexADC12 = 0;
+	static uint16_t fftIndexADC34 = 0;
+	int ADC = 0;
+
+	if(hadc->DMA_Handle->Instance == DMA1_Channel4)
+	{
+		ADC = 1;
+	} else if (hadc->DMA_Handle->Instance == DMA2_Channel1)
+	{
+		ADC = 3;
+	}
+
+	if(ADC == 1)
+	{
+		if(cycle == 1)
+		{
+			integerBuffer = adc_buf1;
+		} else if (cycle == 2)
+		{
+			integerBuffer = &adc_buf1[ADC_BUF_LEN];
+		}
+	} else if (ADC == 3)
+	{
+		if(cycle == 1)
+		{
+			integerBuffer = adc_buf1;
+		} else if (cycle == 2)
+		{
+			integerBuffer = &adc_buf1[ADC_BUF_LEN];
+		}
+	}
+
+	for (uint16_t n = 0; n <(ADC_BUF_LEN/2) - 1; n += 2) {
+
+		leftIn = ((float) integerBuffer[n] - (ADC_MAX/2)) / (ADC_MAX/2);
+		rightIn = ((float) integerBuffer[n+1] - (ADC_MAX/2)) / (ADC_MAX/2);
+
+		if(ADC == 1)
+		{
+		fftBufInADC1[fftIndexADC12] = leftIn;
+		fftBufInADC2[fftIndexADC12] = rightIn;
+		fftIndexADC12++;
+		}
+
+		if(ADC == 3)
+		{
+		fftBufInADC3[fftIndexADC34] = leftIn;
+		fftBufInADC4[fftIndexADC34] = rightIn;
+		fftIndexADC34++;
+		}
+
+	}
+
+	if (fftIndexADC12 == ADC_BUF_LEN)
+	{
+		arm_rfft_fast_f32(&fftHandler, (float32_t *) &fftBufInADC1, (float32_t *) &fftBufOutADC1, 0);
+		arm_rfft_fast_f32(&fftHandler, (float32_t *) &fftBufInADC2, (float32_t *) &fftBufOutADC2, 0);
+
+		fftFlagADC12 = 1;
+		fftIndexADC12 = 0;
+
+		HAL_ADCEx_MultiModeStop_DMA(hadc);
+	}
+
+	if (fftIndexADC34 == ADC_BUF_LEN)
+	{
+		arm_rfft_fast_f32(&fftHandler, (float32_t *) &fftBufInADC3, (float32_t *) &fftBufOutADC3, 0);
+		arm_rfft_fast_f32(&fftHandler, (float32_t *) &fftBufInADC4, (float32_t *) &fftBufOutADC4, 0);
+		fftFlagADC34 = 1;
+
+		fftIndexADC34 = 0;
+		HAL_ADCEx_MultiModeStop_DMA(hadc);
+	}
+
+}
 /* USER CODE END 4 */
 
 /**
@@ -1638,10 +1896,13 @@ void Error_Handler(void)
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
   __disable_irq();
+
+  /*
   while (1)
   {
 	HAL_UART_Transmit(&huart1, (uint8_t*) errMsg, strlen(errMsg), HAL_MAX_DELAY);
   }
+  */
   /* USER CODE END Error_Handler_Debug */
 }
 

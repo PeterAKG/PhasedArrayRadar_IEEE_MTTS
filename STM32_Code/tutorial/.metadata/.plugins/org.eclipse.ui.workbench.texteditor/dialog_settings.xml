@@ -3,6 +3,11 @@
 	<item key="hasShownOverlayPopupBefore" value="true"/>
 	<item key="replaceBarOpen" value="false"/>
 	<list key="searchhistory">
+		<item value="samplingFreq"/>
+		<item value="msg"/>
+		<item value="f16"/>
+		<item value="fftFlagADC12"/>
+		<item value="fftIndex"/>
 		<item value="time_t"/>
 		<item value="HAL_ADCEx_MultiModeConfigChannel"/>
 		<item value="HAL_ADCEx"/>
@@ -13,10 +18,5 @@
 		<item value="MultiModeConfigChannel "/>
 		<item value="ADC1"/>
 		<item value="  ADC_Cmd(ADC1, ENABLE);"/>
-		<item value="ADC_HandleTypeDef"/>
-		<item value="hadc2"/>
-		<item value="HAL_ADC_ConvCpltCallback"/>
-		<item value="error_"/>
-		<item value="convCompleted"/>
 	</list>
 </section>

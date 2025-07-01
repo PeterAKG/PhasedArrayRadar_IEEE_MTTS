@@ -3,6 +3,7 @@
 	<item key="hasShownOverlayPopupBefore" value="true"/>
 	<item key="replaceBarOpen" value="false"/>
 	<list key="searchhistory">
+		<item value="fftBufInADC1"/>
 		<item value="fftHandler"/>
 		<item value="ADC1"/>
 		<item value="USE_HAL_ADC_REGISTER_CALLBACKS"/>
@@ -17,6 +18,5 @@
 		<item value="break"/>
 		<item value="fftFlagADC12"/>
 		<item value="phaseResult"/>
-		<item value="phaseDifference"/>
 	</list>
 </section>

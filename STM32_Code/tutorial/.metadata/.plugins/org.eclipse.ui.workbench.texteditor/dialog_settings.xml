@@ -3,20 +3,20 @@
 	<item key="hasShownOverlayPopupBefore" value="true"/>
 	<item key="replaceBarOpen" value="false"/>
 	<list key="searchhistory">
-		<item value="samplingFreq"/>
-		<item value="msg"/>
-		<item value="f16"/>
-		<item value="fftFlagADC12"/>
-		<item value="fftIndex"/>
-		<item value="time_t"/>
-		<item value="HAL_ADCEx_MultiModeConfigChannel"/>
-		<item value="HAL_ADCEx"/>
-		<item value="ADC"/>
-		<item value="DMA"/>
-		<item value="DMA_HandleTypeDef"/>
-		<item value="baud"/>
-		<item value="MultiModeConfigChannel "/>
+		<item value="fftHandler"/>
 		<item value="ADC1"/>
-		<item value="  ADC_Cmd(ADC1, ENABLE);"/>
+		<item value="USE_HAL_ADC_REGISTER_CALLBACKS"/>
+		<item value="tmp_hadc_slave"/>
+		<item value="tmp_hal_status"/>
+		<item value="__HAL_TIM_ENABLE"/>
+		<item value="#if defined(ADC_MULTIMODE_SUPPORT)"/>
+		<item value="HAL_StatusTypeDef (ADC_H"/>
+		<item value="TIM8"/>
+		<item value="TIM_IRQHandler"/>
+		<item value="htim3"/>
+		<item value="break"/>
+		<item value="fftFlagADC12"/>
+		<item value="phaseResult"/>
+		<item value="phaseDifference"/>
 	</list>
 </section>

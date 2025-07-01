@@ -1,7 +1,7 @@
-../Core/Src/main.c:377:6:SystemClock_Config	3
-../Core/Src/main.c:1776:10:DWT_Delay_Init	1
-../Core/Src/main.c:174:5:main	92
-../Core/Src/main.c:1807:6:Process_HalfBuffer	14
-../Core/Src/main.c:1727:6:HAL_ADC_ConvHalfCpltCallback	3
-../Core/Src/main.c:1743:6:HAL_ADC_ConvCpltCallback	3
-../Core/Src/main.c:1894:6:Error_Handler	1
+../Core/Src/main.c:379:6:SystemClock_Config	3
+../Core/Src/main.c:1785:10:DWT_Delay_Init	1
+../Core/Src/main.c:173:5:main	92
+../Core/Src/main.c:1816:6:Process_HalfBuffer	14
+../Core/Src/main.c:1736:6:HAL_ADC_ConvHalfCpltCallback	3
+../Core/Src/main.c:1752:6:HAL_ADC_ConvCpltCallback	3
+../Core/Src/main.c:1903:6:Error_Handler	1

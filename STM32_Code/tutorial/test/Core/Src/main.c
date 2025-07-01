@@ -35,7 +35,6 @@
 /* USER CODE BEGIN PD */
 #define ADC_BUF_LEN 2048
 
-#define ARM_MATH_CM7
 #include "arm_math.h"
 
 #define ADC_MAX 2048
@@ -97,7 +96,7 @@ uint8_t delay;
 
 uint32_t au32_initial_ticksADC1 = 0;
 uint32_t au32_midway_ticksADC1 = 0;
-uint32_t au32_end_ticksADC1 = 0;
+uint32_t au32_end_ticksADC1 = 0;~
 
 uint32_t au32_initial_ticksADC3 = 0;
 uint32_t au32_midway_ticksADC3 = 0;
@@ -233,9 +232,11 @@ int main(void)
   HAL_UART_Transmit(&huart1, (uint8_t*) msg, strlen(msg), HAL_MAX_DELAY);
   */
 
-  //au32_initial_ticksADC1 = DWT->CYCCNT;
+  HAL_GPIO_WritePin(GPIOF, GPIO_PIN_2, GPIO_PIN_RESET);
 
   arm_rfft_fast_init_f32(&fftHandler, ADC_BUF_LEN);
+
+  au32_initial_ticksADC1 = DWT->CYCCNT;
 
   HAL_ADCEx_MultiModeStart_DMA(&hadc1, (uint32_t *) adc_buf1, ADC_BUF_LEN); //I figured out how the dual synchronous simultaneous mode works, but it broke randomly. For some reason, it is only writing the value of one channel to
   //the buffer. I have no idea why.
@@ -255,7 +256,6 @@ int main(void)
 	  //a lot of them make references to manuals I am clueless about or how to find. I think I might need to slow down and actually take time to understand what I am doing.
 
 	  HAL_Delay(1000);
-
 
 	  /*
 	if(indexStoppedADC1)
@@ -327,6 +327,8 @@ int main(void)
 	//Now that I have the DSP Library installed and the ADCs working properly. All that is left to do is to call an FFT on the data I collected and see if it actually works :)
 	if(fftFlagADC12)
 	{
+
+		HAL_GPIO_WritePin(GPIOF, GPIO_PIN_2, GPIO_PIN_RESET);
 		HAL_UART_Transmit(&huart1, (uint8_t*) FFT1, strlen(FFT1), HAL_MAX_DELAY);
 
 		for(int j = 0; j < ADC_BUF_LEN; j += 2)
@@ -618,7 +620,7 @@ static void MX_ADC3_Init(void)
   /** Common config
   */
   hadc3.Instance = ADC3;
-  hadc3.Init.ClockPrescaler = ADC_CLOCK_ASYNC_DIV64;
+  hadc3.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV1;
   hadc3.Init.Resolution = ADC_RESOLUTION_12B;
   hadc3.Init.DataAlign = ADC_DATAALIGN_RIGHT;
   hadc3.Init.GainCompensation = 0;
@@ -687,7 +689,7 @@ static void MX_ADC4_Init(void)
   /** Common config
   */
   hadc4.Instance = ADC4;
-  hadc4.Init.ClockPrescaler = ADC_CLOCK_ASYNC_DIV64;
+  hadc4.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV1;
   hadc4.Init.Resolution = ADC_RESOLUTION_12B;
   hadc4.Init.DataAlign = ADC_DATAALIGN_RIGHT;
   hadc4.Init.GainCompensation = 0;
@@ -1675,10 +1677,10 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : GPIO_OUT_LED_GREEN_Pin M1_ENABLE1_GPIO_Pin M1_ENABLE2_GPIO_Pin M2_ENABLE2_GPIO_Pin
-                           GPIO_OUT_INRUSH_Pin GPIO_OUT_ID_ENABLE_Pin */
-  GPIO_InitStruct.Pin = GPIO_OUT_LED_GREEN_Pin|M1_ENABLE1_GPIO_Pin|M1_ENABLE2_GPIO_Pin|M2_ENABLE2_GPIO_Pin
-                          |GPIO_OUT_INRUSH_Pin|GPIO_OUT_ID_ENABLE_Pin;
+  /*Configure GPIO pins : GPIO_OUT_LED_GREEN_Pin M1_ENABLE1_GPIO_Pin M1_ENABLE2_GPIO_Pin GPIO_OUT_INRUSH_Pin
+                           GPIO_OUT_ID_ENABLE_Pin */
+  GPIO_InitStruct.Pin = GPIO_OUT_LED_GREEN_Pin|M1_ENABLE1_GPIO_Pin|M1_ENABLE2_GPIO_Pin|GPIO_OUT_INRUSH_Pin
+                          |GPIO_OUT_ID_ENABLE_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -1689,6 +1691,13 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(BUTTON_RESET_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : M2_ENABLE2_GPIO_Pin */
+  GPIO_InitStruct.Pin = M2_ENABLE2_GPIO_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+  HAL_GPIO_Init(M2_ENABLE2_GPIO_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PB0 PB1 */
   GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1;
@@ -1725,7 +1734,7 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 //Called when first half of buffer is filled
 void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef* hadc){
-
+	HAL_GPIO_WritePin(GPIOF, GPIO_PIN_2, GPIO_PIN_SET);
 
 	if(hadc->DMA_Handle->Instance == DMA1_Channel4)
 	{
@@ -1741,7 +1750,7 @@ void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef* hadc){
 
 //Called when buffer is completely filled
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc){
-
+	HAL_GPIO_WritePin(GPIOF, GPIO_PIN_2, GPIO_PIN_RESET);
 
 	if(hadc->DMA_Handle->Instance == DMA1_Channel4)
 	{

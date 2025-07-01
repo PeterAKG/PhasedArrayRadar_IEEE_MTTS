@@ -1,7 +1,7 @@
-../Core/Src/main.c:377:6:SystemClock_Config	88	static,ignoring_inline_asm
-../Core/Src/main.c:1776:10:DWT_Delay_Init	0	static,ignoring_inline_asm
-../Core/Src/main.c:174:5:main	496	static,ignoring_inline_asm
-../Core/Src/main.c:1807:6:Process_HalfBuffer	48	static
-../Core/Src/main.c:1727:6:HAL_ADC_ConvHalfCpltCallback	0	static
-../Core/Src/main.c:1743:6:HAL_ADC_ConvCpltCallback	0	static
-../Core/Src/main.c:1894:6:Error_Handler	0	static,ignoring_inline_asm
+../Core/Src/main.c:379:6:SystemClock_Config	88	static,ignoring_inline_asm
+../Core/Src/main.c:1785:10:DWT_Delay_Init	0	static,ignoring_inline_asm
+../Core/Src/main.c:173:5:main	504	static,ignoring_inline_asm
+../Core/Src/main.c:1816:6:Process_HalfBuffer	48	static
+../Core/Src/main.c:1736:6:HAL_ADC_ConvHalfCpltCallback	8	static
+../Core/Src/main.c:1752:6:HAL_ADC_ConvCpltCallback	8	static
+../Core/Src/main.c:1903:6:Error_Handler	0	static,ignoring_inline_asm

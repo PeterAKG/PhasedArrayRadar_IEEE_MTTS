@@ -74,29 +74,13 @@ TIM_HandleTypeDef htim20;
 UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
-uint16_t adc_buf1[2 * ADC_BUF_LEN + 2]; //The reason this is a 16 bit buffer is that we are writing a 32 bit number which contains two different 16 bit values. Instead of writing it to an
+uint16_t adc_buf1[2 * ADC_BUF_LEN]; //The reason this is a 16 bit buffer is that we are writing a 32 bit number which contains two different 16 bit values. Instead of writing it to an
 //array of 32 bit numbers with a length of ADC_BUF_LEN, why not write it to an array of 16 bit numbers with a length of ADC_BUF_LEN * 2 to make it easier on our brain?
-uint16_t adc_buf3[2 * ADC_BUF_LEN + 2];
+uint16_t adc_buf3[2 * ADC_BUF_LEN];
 
-
-uint32_t values;
-uint32_t values2;
-char msg[30] = "Starting code\r\n";
-char errMsg[15] = "Error in DWT\r\n";
-char msg3[30] = "Beginning transmission...\r\n";
-char testingMsg[30] = "Fooled by IDE?\r\n";
 uint32_t samplingFreq;
 
-uint32_t au32_initial_ticksADC1 = 0;
-uint32_t au32_midway_ticksADC1 = 0;
-uint32_t au32_end_ticksADC1 = 0;
-
-uint32_t au32_initial_ticksADC3 = 0;
-uint32_t au32_midway_ticksADC3 = 0;
-uint32_t au32_end_ticksADC3 = 0;
-
 arm_rfft_fast_instance_f32 fftHandler;
-arm_rfft_instance_q15 integerFFTHandler;
 
 float32_t fftBufInADC1[ADC_BUF_LEN];
 float32_t fftBufOutADC1[ADC_BUF_LEN];
@@ -113,8 +97,8 @@ float32_t fftBufOutADC4[ADC_BUF_LEN];
 uint8_t fftFlagADC12 = 0;
 uint8_t fftFlagADC34 = 0;
 
-uint16_t adc1cpy[2 * ADC_BUF_LEN];
-uint16_t adc3cpy[2 * ADC_BUF_LEN];
+uint16_t adc_buf1cpy[2 * ADC_BUF_LEN];
+uint16_t adc_buf3cpy[2 * ADC_BUF_LEN];
 
 int copyadc_buf1 = 0;
 int copyadc_buf3 = 0;
@@ -178,20 +162,10 @@ int main(void)
   int maxAmplitudeADC1 = 0;
   int maxAmplitudeIndexADC1 = -1;
 
-  int maxAmplitudeADC2 = 0;
-  int maxAmplitudeIndexADC2 = -1;
-
-  int maxAmplitudeADC3 = 0;
-  int maxAmplitudeIndexADC3 = -1;
-
-  int maxAmplitudeADC4 = 0;
-  int maxAmplitudeIndexADC4 = -1;
-
   int currentMagnitude;
   float realPartMult;
   float imagPartMult;
 
-  float phaseDifferenceResult;
   char phaseResult[100];
 
   int calibrated = 0;
@@ -208,7 +182,7 @@ int main(void)
   char errorMsg1[30] = "Error, exiting ADC12\r\n";
   char errorMsg2[30] = "Error, exiting ADC23\r\n";
   char errorMsg3[30] = "Error, exiting ADC34\r\n";
-  char calibrationMsg[30] = "Calibrated!\r\n";
+  char calibrationMsg[100] = "Calibrated!\r\n";
 
   /* USER CODE END Init */
 
@@ -247,25 +221,20 @@ int main(void)
 	  Error_Handler();
   }
 
-  arm_rfft_fast_init_f32(&fftHandler, ADC_BUF_LEN);
-
-  if(arm_rfft_init_q15(&integerFFTHandler, 2 * ADC_BUF_LEN, 0, 1) != ARM_MATH_SUCCESS)
+  if(arm_rfft_fast_init_f32(&fftHandler, ADC_BUF_LEN) == ARM_MATH_ARGUMENT_ERROR)
   {
 	  Error_Handler();
   }
 
   if(HAL_ADCEx_MultiModeStart_DMA(&hadc1, (uint32_t *) adc_buf1, ADC_BUF_LEN) != HAL_OK)
   {
-	  Error_Handler(); //I figured out how the dual synchronous simultaneous mode works, but it broke randomly. For some reason, it is only writing the value of one channel to
+	  Error_Handler();
   }
 
   if(HAL_ADCEx_MultiModeStart_DMA(&hadc3, (uint32_t *) adc_buf3, ADC_BUF_LEN) != HAL_OK)
   {
 	  Error_Handler();
   }
-
-  //HAL_TIM_OnePulse_Start_IT(&htim8, 0); //Second argument is deprecated and kept only for legacy reasons (According to HAL documentation)
-  //HAL_TIM_Base_Start_IT(&htim8);
 
   if (HAL_TIM_Base_Start_IT(&htim8) != HAL_OK) {
     Error_Handler();
@@ -276,15 +245,43 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+
 	  	if(copyadc_buf1)
 	  	{
-	  		memcpy(adc1cpy, adc_buf1, ADC_BUF_LEN);
+// 			if(HAL_ADCEx_MultiModeStop_DMA(&hadc1) != HAL_OK)
+// 			{
+// 			  Error_Handler();
+// 			}
+//
+// 			if(HAL_ADCEx_MultiModeStop_DMA(&hadc3) != HAL_OK)
+// 			{
+// 			  Error_Handler();
+// 			}
+//
+// 			if (HAL_TIM_Base_Stop_IT(&htim8) != HAL_OK) {
+// 			    Error_Handler();
+// 			}
+
+//			USED FOR DEBUGGING PURPOSES
+//			char bufferNumbers[100];
+//			sprintf(bufferNumbers, "Sampling rate is %lu\r\n", samplingFreq);
+//			HAL_UART_Transmit(&huart1, (uint8_t*) bufferNumbers, strlen(bufferNumbers), HAL_MAX_DELAY);
+//
+//			for(int j = 0; j < ADC_BUF_LEN; j += 2)
+//			{
+//				sprintf(bufferNumbers, "%d,%d,%d,%d\r\n", adc_buf1[j], adc_buf1[j + 1], adc_buf3[j], adc_buf3[j + 1]);
+//				HAL_UART_Transmit(&huart1, (uint8_t*) bufferNumbers, strlen(bufferNumbers), HAL_MAX_DELAY);
+//			}
+//			break;
+//			USED FOR DEBUGGING PURPOSES
+
+	  		memcpy(adc_buf1cpy, adc_buf1, ADC_BUF_LEN);
 	  		copyadc_buf1 = 0;
 	  	}
 
 	  	if(copyadc_buf3)
 	  	{
-	  		memcpy(adc3cpy, adc_buf3, ADC_BUF_LEN);
+	  		memcpy(adc_buf3cpy, adc_buf3, ADC_BUF_LEN);
 	  		copyadc_buf3 = 0;
 	  	}
 
@@ -298,8 +295,10 @@ int main(void)
 				    Error_Handler();
 			}
 
-			memcpy(adc1cpy, &adc_buf1[ADC_BUF_LEN], ADC_BUF_LEN);
-	  		Process_Buffer(adc1cpy);
+			memcpy(&adc_buf1cpy[ADC_BUF_LEN], &adc_buf1[ADC_BUF_LEN], ADC_BUF_LEN);
+	  		Process_Buffer(adc_buf1cpy);
+
+	  		finishadc_buf1 = 0;
 	  	}
 
 	  	if(finishadc_buf3)
@@ -312,13 +311,15 @@ int main(void)
 				    Error_Handler();
 			}
 
-			memcpy(adc3cpy, &adc_buf1[ADC_BUF_LEN], ADC_BUF_LEN);
-			Process_Buffer(adc3cpy);
+			memcpy(&adc_buf3cpy[ADC_BUF_LEN], &adc_buf3[ADC_BUF_LEN], ADC_BUF_LEN);
+			Process_Buffer(adc_buf3cpy);
+
+			finishadc_buf3 = 0;
 	  	}
 
 		if(fftFlagADC12 && fftFlagADC34 && (!calibrated))
 		{
-			for(int j = 6; j < ADC_BUF_LEN; j += 2)
+			for(int j = 20; j < ADC_BUF_LEN; j += 2)
 			{
 				//Real signal is fftBufOutADC1[j]
 				//Imaginary signal is fftBufOutADC1[j + 1]
@@ -358,7 +359,7 @@ int main(void)
  			realPartMult = fftBufOutADC3[maxAmplitudeIndexADC1] * fftBufOutADC4[maxAmplitudeIndexADC1] + fftBufOutADC3[maxAmplitudeIndexADC1 + 1] * fftBufOutADC4[maxAmplitudeIndexADC1 + 1];
  			imagPartMult = fftBufOutADC4[maxAmplitudeIndexADC1] * fftBufOutADC3[maxAmplitudeIndexADC1 + 1] - fftBufOutADC3[maxAmplitudeIndexADC1] * fftBufOutADC4[maxAmplitudeIndexADC1 + 1];
 
- 			//Now we have A * e^(i * (theta - phi)). We have to do atan2 to get theta-phi
+ 			//Now we have A * e^(i * (theta - phi)). We have to do atan2 to get tfheta-phi
  			if(arm_atan2_f32((float) imagPartMult, (float) realPartMult, &phaseOffset34) != ARM_MATH_SUCCESS)
  			{
  				HAL_UART_Transmit(&huart1, (uint8_t*) errorMsg, strlen(errorMsg), HAL_MAX_DELAY);
@@ -367,6 +368,16 @@ int main(void)
  			calibrated = 1; //Now we can subtract the phase offset when we measure the phase in the future to get the true phase difference between channels
 
  			HAL_UART_Transmit(&huart1, (uint8_t*) calibrationMsg, strlen(calibrationMsg), HAL_MAX_DELAY);
+
+ 			sprintf(calibrationMsg, "The phase offset between ADC1 and ADC2 is %1.2f degrees\r\n", phaseOffset12/(PI) * 180);
+ 			HAL_UART_Transmit(&huart1, (uint8_t*) calibrationMsg, strlen(calibrationMsg), HAL_MAX_DELAY);
+
+ 			sprintf(calibrationMsg, "The phase offset between ADC2 and ADC3 is %1.2f degrees\r\n", phaseOffset23/(PI) * 180);
+ 			HAL_UART_Transmit(&huart1, (uint8_t*) calibrationMsg, strlen(calibrationMsg), HAL_MAX_DELAY);
+
+ 			sprintf(calibrationMsg, "The phase offset between ADC3 and ADC4 is %1.2f degrees\r\n", phaseOffset34/(PI) * 180);
+ 			HAL_UART_Transmit(&huart1, (uint8_t*) calibrationMsg, strlen(calibrationMsg), HAL_MAX_DELAY);
+
 
 			fftFlagADC12 = 0;
  			fftFlagADC34 = 0;
@@ -422,6 +433,40 @@ int main(void)
  			//Now we have to calculate the imaginary sample of one FFT times the complex conjugate of the second
  			realPartMult = fftBufOutADC3[maxAmplitudeIndexADC1] * fftBufOutADC4[maxAmplitudeIndexADC1] + fftBufOutADC3[maxAmplitudeIndexADC1 + 1] * fftBufOutADC4[maxAmplitudeIndexADC1 + 1];
  			imagPartMult = fftBufOutADC4[maxAmplitudeIndexADC1] * fftBufOutADC3[maxAmplitudeIndexADC1 + 1] - fftBufOutADC3[maxAmplitudeIndexADC1] * fftBufOutADC4[maxAmplitudeIndexADC1 + 1];
+
+ 			//USED FOR DEBUGGING PURPOSES
+
+ 			char bufferNumbers[100];
+ 			sprintf(bufferNumbers, "Sampling rate is %lu\r\n", samplingFreq);
+ 			HAL_UART_Transmit(&huart1, (uint8_t*) bufferNumbers, strlen(bufferNumbers), HAL_MAX_DELAY);
+
+ 			for(int j = 0; j < 2*ADC_BUF_LEN; j += 2)
+ 			{
+ 				sprintf(bufferNumbers, "%d,%d,%d,%d\r\n", adc_buf1[j], adc_buf1[j + 1], adc_buf3[j], adc_buf3[j + 1]);
+ 				HAL_UART_Transmit(&huart1, (uint8_t*) bufferNumbers, strlen(bufferNumbers), HAL_MAX_DELAY);
+ 			}
+
+ 			sprintf(bufferNumbers, "Sampling rate is %lu\r\n", samplingFreq);
+ 			HAL_UART_Transmit(&huart1, (uint8_t*) bufferNumbers, strlen(bufferNumbers), HAL_MAX_DELAY);
+
+ 			for(int j = 0; j < ADC_BUF_LEN; j += 2)
+ 			{
+ 			sprintf(bufferNumbers, "%1.2f,%1.2f,%1.2f,%1.2f,%1.2f,%1.2f,%1.2f,%1.2f\r\n", fftBufOutADC1[j], fftBufOutADC1[j+1], fftBufOutADC2[j], fftBufOutADC2[j+1], fftBufOutADC3[j], fftBufOutADC3[j+1], fftBufOutADC4[j], fftBufOutADC4[j+1]);
+ 			HAL_UART_Transmit(&huart1, (uint8_t*) bufferNumbers, strlen(bufferNumbers), HAL_MAX_DELAY);
+ 			}
+ 			break;
+
+// 			char bufferNumbers[100];
+// 			sprintf(bufferNumbers, "Sampling rate is %lu\r\n", samplingFreq);
+// 			HAL_UART_Transmit(&huart1, (uint8_t*) bufferNumbers, strlen(bufferNumbers), HAL_MAX_DELAY);
+//
+// 			for(int j = 0; j < ADC_BUF_LEN; j += 2)
+// 			{
+// 			sprintf(bufferNumbers, "%1.2f,%1.2f,%1.2f,%1.2f\r\n", fftBufOutADC1[j] * fftBufOutADC1[j] + fftBufOutADC1[j+1] * fftBufOutADC1[j+1], fftBufOutADC2[j] * fftBufOutADC2[j] + fftBufOutADC2[j+1] * fftBufOutADC2[j+1], fftBufOutADC3[j] * fftBufOutADC3[j] + fftBufOutADC3[j+1] * fftBufOutADC3[j+1], fftBufOutADC4[j] * fftBufOutADC4[j] + fftBufOutADC4[j+1] * fftBufOutADC4[j+1]);
+// 			HAL_UART_Transmit(&huart1, (uint8_t*) bufferNumbers, strlen(bufferNumbers), HAL_MAX_DELAY);
+// 			}
+// 			break;
+ 			//USED FOR DEBUGGING PURPOSES
 
  			//Now we have A * e^(i * (theta - phi)). We have to do atan2 to get theta-phi
  			if(arm_atan2_f32((float) imagPartMult, (float) realPartMult, &phaseDifference34) != ARM_MATH_SUCCESS)
@@ -628,6 +673,8 @@ static void MX_ADC1_Init(void)
 
   samplingFreq = 0.5 * fADC / (samplingTime + resolution + 0.5); //For some mystery reason I need to divide by two to get the true sampling frequency
   //(probably has something to do with dual simultaneous mode)
+
+
 
   /* USER CODE END ADC1_Init 2 */
 
@@ -1076,7 +1123,6 @@ static void MX_TIM2_Init(void)
 
   /* USER CODE END TIM2_Init 0 */
 
-  TIM_Encoder_InitTypeDef sConfig = {0};
   TIM_MasterConfigTypeDef sMasterConfig = {0};
   TIM_IC_InitTypeDef sConfigIC = {0};
 
@@ -1090,19 +1136,6 @@ static void MX_TIM2_Init(void)
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_IC_Init(&htim2) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  sConfig.EncoderMode = TIM_ENCODERMODE_TI1;
-  sConfig.IC1Polarity = TIM_ICPOLARITY_RISING;
-  sConfig.IC1Selection = TIM_ICSELECTION_DIRECTTI;
-  sConfig.IC1Prescaler = TIM_ICPSC_DIV1;
-  sConfig.IC1Filter = 0;
-  sConfig.IC2Polarity = TIM_ICPOLARITY_RISING;
-  sConfig.IC2Selection = TIM_ICSELECTION_DIRECTTI;
-  sConfig.IC2Prescaler = TIM_ICPSC_DIV1;
-  sConfig.IC2Filter = 0;
-  if (HAL_TIM_Encoder_Init(&htim2, &sConfig) != HAL_OK)
   {
     Error_Handler();
   }
@@ -1768,7 +1801,8 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOG, GPIO_OUT_M2_ENABLE_Pin|GPIO_OUT_M1_ENABLE_Pin|GPIO_OUT_M1_BRAKE_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOD, GPIO_OUT_M22_BRAKE_Pin|M3_ENABLE2_GPIO_Pin|GPIO_OUT_LED_YELLOW_Pin|GPIO_OUT_LED_RED_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOD, GPIO_OUT_M22_BRAKE_Pin|M3_ENABLE2_GPIO_Pin|GPIO_PIN_4|GPIO_OUT_LED_YELLOW_Pin
+                          |GPIO_OUT_LED_RED_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin : M2_ENABLE1_GPIO_Pin */
   GPIO_InitStruct.Pin = M2_ENABLE1_GPIO_Pin;
@@ -1825,8 +1859,10 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : GPIO_OUT_M22_BRAKE_Pin M3_ENABLE2_GPIO_Pin GPIO_OUT_LED_YELLOW_Pin GPIO_OUT_LED_RED_Pin */
-  GPIO_InitStruct.Pin = GPIO_OUT_M22_BRAKE_Pin|M3_ENABLE2_GPIO_Pin|GPIO_OUT_LED_YELLOW_Pin|GPIO_OUT_LED_RED_Pin;
+  /*Configure GPIO pins : GPIO_OUT_M22_BRAKE_Pin M3_ENABLE2_GPIO_Pin PD4 GPIO_OUT_LED_YELLOW_Pin
+                           GPIO_OUT_LED_RED_Pin */
+  GPIO_InitStruct.Pin = GPIO_OUT_M22_BRAKE_Pin|M3_ENABLE2_GPIO_Pin|GPIO_PIN_4|GPIO_OUT_LED_YELLOW_Pin
+                          |GPIO_OUT_LED_RED_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -1841,10 +1877,9 @@ static void MX_GPIO_Init(void)
 //Called when first half of buffer is filled
 void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef* hadc){
 
-	//Process_HalfBuffer(hadc, 1);
+	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_RESET);
 
 	int ADC;
-	uint16_t* integerBuffer;
 
 	if(hadc->DMA_Handle->Instance == DMA1_Channel4)
 	{
@@ -1857,30 +1892,17 @@ void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef* hadc){
 	if(ADC == 1)
 	{
 		copyadc_buf1 = 1;
-	} else {
+	} else if (ADC == 3){
 		copyadc_buf3 = 1;
+	} else {
+		Error_Handler();
 	}
-
-	//It might be necessary for me to set a single flag for both ADC buffers, because if both are sampling at exactly the
-	//same rate starting at the same time, then their conversion half completed callback will also trigger at the same
-	//time, so if they both really go off at the same time, then I could have a flag for one which takes care of copying
-	//the memory for both. It might not be necessary though since GPT says one interrupt will happen, and then the other.
-
-	//What I really need to do is an experiment where I set a GPIO pin high whenever the conversion half complete callback
-	//is called and use a different GPIO for the callback for each ADC, that way I can compare when each are happening relative
-	//to the conv cplt callback and see if I am good
-
-	//Wait a minute, I can memcpy here, and then just turn off the DMA in the convCpltCallback. Then I can do all my floating point conversion stuff there
-	//I should also check to see if using the floating point fft function is actually faster, or if GPT is lying. Can do that using GPIO and oscilliscope
 }
 
 //Called when buffer is completely filled
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc){
 
-	HAL_UART_Transmit(&huart1, (uint8_t*) testingMsg, strlen(testingMsg), HAL_MAX_DELAY);
-
 	int ADC;
-	uint16_t* integerBuffer;
 
 	if(hadc->DMA_Handle->Instance == DMA1_Channel4)
 	{
@@ -1893,8 +1915,10 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc){
 	if(ADC == 1)
 	{
 		finishadc_buf1 = 1;
-	} else {
+	} else if (ADC == 3){
 		finishadc_buf3 = 1;
+	} else {
+		Error_Handler();
 	}
 }
 
@@ -1931,28 +1955,31 @@ uint32_t DWT_Delay_Init(void)
 
 void Process_Buffer(uint16_t* buffer)
 {
-	uint16_t* fftDestination;
 	int ADC;
-	int fftIndexADC12 = 0;
-	int fftIndexADC34 = 0;
-	int leftIn;
-	int rightIn;
+	float leftIn;
+	float rightIn;
 	float32_t* fftInputBuffer1;
 	float32_t* fftInputBuffer2;
 
 	float32_t* fftOutputBuffer1;
 	float32_t* fftOutputBuffer2;
 
-	if(buffer == adc1cpy)
+	if(buffer == adc_buf1cpy)
 	{
 		ADC = 1;
 		fftInputBuffer1 = fftBufInADC1;
 		fftInputBuffer2 = fftBufInADC2;
-	} else if (buffer == adc3cpy)
+
+		fftOutputBuffer1 = fftBufOutADC1;
+		fftOutputBuffer2 = fftBufOutADC2;
+	} else if (buffer == adc_buf3cpy)
 	{
 		ADC = 3;
 		fftInputBuffer1 = fftBufInADC3;
 		fftInputBuffer2 = fftBufInADC4;
+
+		fftOutputBuffer1 = fftBufOutADC3;
+		fftOutputBuffer2 = fftBufOutADC4;
 	} else
 	{
 		Error_Handler();
@@ -1977,102 +2004,6 @@ void Process_Buffer(uint16_t* buffer)
 	{
 		fftFlagADC34 = 1;
 	}
-}
-
-void Process_HalfBuffer(ADC_HandleTypeDef* hadc, int cycle) { //If cycle = 1 we are dealing with the first half of the input buffer, if cycle = 2 then the second half
-
-	static float leftIn, rightIn;
-
-	uint16_t* integerBuffer;
-
-	static uint16_t fftIndexADC12 = 0;
-	static uint16_t fftIndexADC34 = 0;
-	int ADC = 0;
-
-	if(hadc->DMA_Handle->Instance == DMA1_Channel4)
-	{
-		ADC = 1;
-	} else if (hadc->DMA_Handle->Instance == DMA2_Channel1)
-	{
-		ADC = 3;
-	}
-
-	if(ADC == 1)
-	{
-		if(cycle == 1)
-		{
-			integerBuffer = adc_buf1;
-		} else if (cycle == 2)
-		{
-			integerBuffer = &adc_buf1[ADC_BUF_LEN];
-		}
-	} else if (ADC == 3)
-	{
-		if(cycle == 1)
-		{
-			integerBuffer = adc_buf3;
-		} else if (cycle == 2)
-		{
-			integerBuffer = &adc_buf3[ADC_BUF_LEN];
-		}
-	}
-
-	for (uint16_t n = 0; n < ADC_BUF_LEN; n += 2) {
-
-		leftIn = ((float) integerBuffer[n] - (ADC_MAX/2)) / (ADC_MAX/2);
-		rightIn = ((float) integerBuffer[n+1] - (ADC_MAX/2)) / (ADC_MAX/2);
-
-		if(ADC == 1)
-		{
-		fftBufInADC1[fftIndexADC12] = leftIn;
-		fftBufInADC2[fftIndexADC12] = rightIn;
-		fftIndexADC12++;
-		}
-
-		if(ADC == 3)
-		{
-		fftBufInADC3[fftIndexADC34] = leftIn;
-		fftBufInADC4[fftIndexADC34] = rightIn;
-		fftIndexADC34++;
-		}
-
-	}
-
-	if (fftIndexADC12 == ADC_BUF_LEN)
-	{
-		arm_rfft_fast_f32(&fftHandler, (float32_t *) &fftBufInADC1, (float32_t *) &fftBufOutADC1, 0);
-		arm_rfft_fast_f32(&fftHandler, (float32_t *) &fftBufInADC2, (float32_t *) &fftBufOutADC2, 0);
-
-		fftFlagADC12 = 1;
-		fftIndexADC12 = 0;
-
-		if (HAL_TIM_Base_Stop_IT(&htim8) != HAL_OK) {
-			    Error_Handler();
-		}
-
-
-		if (HAL_ADCEx_MultiModeStop_DMA(hadc) != HAL_OK) {
-			    Error_Handler();
-		}
-	}
-
-	if (fftIndexADC34 == ADC_BUF_LEN)
-	{
-		arm_rfft_fast_f32(&fftHandler, (float32_t *) &fftBufInADC3, (float32_t *) &fftBufOutADC3, 0);
-		arm_rfft_fast_f32(&fftHandler, (float32_t *) &fftBufInADC4, (float32_t *) &fftBufOutADC4, 0);
-
-		fftFlagADC34 = 1;
-		fftIndexADC34 = 0;
-
-		if (HAL_TIM_Base_Stop_IT(&htim8) != HAL_OK) {
-			    Error_Handler();
-		}
-
-		if (HAL_ADCEx_MultiModeStop_DMA(hadc) != HAL_OK) {
-			    Error_Handler();
-		}
-	}
-
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)

@@ -252,7 +252,7 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc)
     hdma_adc3.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
     hdma_adc3.Init.MemDataAlignment = DMA_MDATAALIGN_WORD;
     hdma_adc3.Init.Mode = DMA_CIRCULAR;
-    hdma_adc3.Init.Priority = DMA_PRIORITY_HIGH;
+    hdma_adc3.Init.Priority = DMA_PRIORITY_MEDIUM;
     if (HAL_DMA_Init(&hdma_adc3) != HAL_OK)
     {
       Error_Handler();
@@ -917,10 +917,9 @@ void HAL_TIM_IC_MspInit(TIM_HandleTypeDef* htim_ic)
     __HAL_RCC_GPIOD_CLK_ENABLE();
     /**TIM2 GPIO Configuration
     PD3     ------> TIM2_CH1
-    PD4     ------> TIM2_CH2
     PD7     ------> TIM2_CH3
     */
-    GPIO_InitStruct.Pin = M2_ENCA_TIM2_CH1_Pin|M2_ENCB_TIM2_CH2_Pin|M2_ENCZ_TIM2_CH3_Pin;
+    GPIO_InitStruct.Pin = M2_ENCA_TIM2_CH1_Pin|M2_ENCZ_TIM2_CH3_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -1305,10 +1304,9 @@ void HAL_TIM_IC_MspDeInit(TIM_HandleTypeDef* htim_ic)
 
     /**TIM2 GPIO Configuration
     PD3     ------> TIM2_CH1
-    PD4     ------> TIM2_CH2
     PD7     ------> TIM2_CH3
     */
-    HAL_GPIO_DeInit(GPIOD, M2_ENCA_TIM2_CH1_Pin|M2_ENCB_TIM2_CH2_Pin|M2_ENCZ_TIM2_CH3_Pin);
+    HAL_GPIO_DeInit(GPIOD, M2_ENCA_TIM2_CH1_Pin|M2_ENCZ_TIM2_CH3_Pin);
 
     /* USER CODE BEGIN TIM2_MspDeInit 1 */
 

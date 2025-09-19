@@ -3830,3 +3830,1277 @@ arm-none-eabi-size  simplerCode.elf
  137616	    500	  56892	 195008	  2f9c0	simplerCode.elf
 Finished building: default.size.stdout
  
+23:07:54 **** Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:27: warning: "ARM_MATH_CM4" redefined
+   27 | #define ARM_MATH_CM4
+      | 
+<command-line>: note: this is the location of the previous definition
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:227:25: error: 'integerFFTHandler' undeclared (first use in this function)
+  227 |   if(arm_rfft_init_q15(&integerFFTHandler, 2 * ADC_BUF_LEN, 0, 1) != ARM_MATH_SUCCESS)
+      |                         ^~~~~~~~~~~~~~~~~
+../Core/Src/main.c:227:25: note: each undeclared identifier is reported only once for each function it appears in
+../Core/Src/main.c:253:32: error: 'adc1cpy' undeclared (first use in this function); did you mean 'adc_buf1cpy'?
+  253 |                         memcpy(adc1cpy, adc_buf1, ADC_BUF_LEN);
+      |                                ^~~~~~~
+      |                                adc_buf1cpy
+../Core/Src/main.c:169:9: warning: unused variable 'phaseDifferenceResult' [-Wunused-variable]
+  169 |   float phaseDifferenceResult;
+      |         ^~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c: In function 'Process_Buffer':
+../Core/Src/main.c:1899:13: warning: unused variable 'fftIndexADC34' [-Wunused-variable]
+ 1899 |         int fftIndexADC34 = 0;
+      |             ^~~~~~~~~~~~~
+../Core/Src/main.c:1898:13: warning: unused variable 'fftIndexADC12' [-Wunused-variable]
+ 1898 |         int fftIndexADC12 = 0;
+      |             ^~~~~~~~~~~~~
+../Core/Src/main.c:1896:19: warning: unused variable 'fftDestination' [-Wunused-variable]
+ 1896 |         uint16_t* fftDestination;
+      |                   ^~~~~~~~~~~~~~
+make: *** [Core/Src/subdir.mk:34: Core/Src/main.o] Error 1
+"make -j22 all" terminated with exit code 2. Build might be incomplete.
+23:10:02 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:27: warning: "ARM_MATH_CM4" redefined
+   27 | #define ARM_MATH_CM4
+      | 
+<command-line>: note: this is the location of the previous definition
+arm-none-eabi-gcc -o "simplerCode.elf" @"objects.list"  -larm_cortexM4lf_math -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\simplerCode\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="simplerCode.map" -Wl,--gc-sections -static -L../Drivers/CMSIS/Lib/GCC -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: simplerCode.elf
+ 
+arm-none-eabi-size  simplerCode.elf 
+arm-none-eabi-objdump -h -S simplerCode.elf  > "simplerCode.list"
+   text	   data	    bss	    dec	    hex	filename
+ 143280	    468	 101964	 245712	  3bfd0	simplerCode.elf
+Finished building: default.size.stdout
+ 
+Finished building: simplerCode.list
+ 
+18:32:06 **** Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:27: warning: "ARM_MATH_CM4" redefined
+   27 | #define ARM_MATH_CM4
+      | 
+<command-line>: note: this is the location of the previous definition
+arm-none-eabi-gcc -o "simplerCode.elf" @"objects.list"  -larm_cortexM4lf_math -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\simplerCode\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="simplerCode.map" -Wl,--gc-sections -static -L../Drivers/CMSIS/Lib/GCC -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: simplerCode.elf
+ 
+arm-none-eabi-size  simplerCode.elf 
+arm-none-eabi-objdump -h -S simplerCode.elf  > "simplerCode.list"
+   text	   data	    bss	    dec	    hex	filename
+ 143352	    468	 101964	 245784	  3c018	simplerCode.elf
+Finished building: default.size.stdout
+ 
+Finished building: simplerCode.list
+ 
+18:32:49 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:27: warning: "ARM_MATH_CM4" redefined
+   27 | #define ARM_MATH_CM4
+      | 
+<command-line>: note: this is the location of the previous definition
+arm-none-eabi-gcc -o "simplerCode.elf" @"objects.list"  -larm_cortexM4lf_math -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\simplerCode\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="simplerCode.map" -Wl,--gc-sections -static -L../Drivers/CMSIS/Lib/GCC -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: simplerCode.elf
+ 
+arm-none-eabi-size  simplerCode.elf 
+arm-none-eabi-objdump -h -S simplerCode.elf  > "simplerCode.list"
+   text	   data	    bss	    dec	    hex	filename
+ 143280	    468	 101964	 245712	  3bfd0	simplerCode.elf
+Finished building: default.size.stdout
+ 
+Finished building: simplerCode.list
+ 
+18:34:03 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:27: warning: "ARM_MATH_CM4" redefined
+   27 | #define ARM_MATH_CM4
+      | 
+<command-line>: note: this is the location of the previous definition
+arm-none-eabi-gcc -o "simplerCode.elf" @"objects.list"  -larm_cortexM4lf_math -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\simplerCode\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="simplerCode.map" -Wl,--gc-sections -static -L../Drivers/CMSIS/Lib/GCC -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: simplerCode.elf
+ 
+arm-none-eabi-size  simplerCode.elf 
+arm-none-eabi-objdump -h -S simplerCode.elf  > "simplerCode.list"
+   text	   data	    bss	    dec	    hex	filename
+ 143368	    468	 101964	 245800	  3c028	simplerCode.elf
+Finished building: default.size.stdout
+ 
+Finished building: simplerCode.list
+ 
+18:36:00 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:27: warning: "ARM_MATH_CM4" redefined
+   27 | #define ARM_MATH_CM4
+      | 
+<command-line>: note: this is the location of the previous definition
+arm-none-eabi-gcc -o "simplerCode.elf" @"objects.list"  -larm_cortexM4lf_math -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\simplerCode\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="simplerCode.map" -Wl,--gc-sections -static -L../Drivers/CMSIS/Lib/GCC -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: simplerCode.elf
+ 
+arm-none-eabi-size  simplerCode.elf 
+arm-none-eabi-objdump -h -S simplerCode.elf  > "simplerCode.list"
+   text	   data	    bss	    dec	    hex	filename
+ 143288	    468	 101964	 245720	  3bfd8	simplerCode.elf
+Finished building: default.size.stdout
+ 
+Finished building: simplerCode.list
+ 
+18:36:44 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143288	    468	 101964	 245720	  3bfd8	simplerCode.elf
+Finished building: default.size.stdout
+ 
+23:12:35 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143288	    468	 101964	 245720	  3bfd8	simplerCode.elf
+Finished building: default.size.stdout
+ 
+23:13:47 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:27: warning: "ARM_MATH_CM4" redefined
+   27 | #define ARM_MATH_CM4
+      | 
+<command-line>: note: this is the location of the previous definition
+arm-none-eabi-gcc -o "simplerCode.elf" @"objects.list"  -larm_cortexM4lf_math -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\simplerCode\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="simplerCode.map" -Wl,--gc-sections -static -L../Drivers/CMSIS/Lib/GCC -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: simplerCode.elf
+ 
+arm-none-eabi-size  simplerCode.elf 
+arm-none-eabi-objdump -h -S simplerCode.elf  > "simplerCode.list"
+   text	   data	    bss	    dec	    hex	filename
+ 143288	    468	 101964	 245720	  3bfd8	simplerCode.elf
+Finished building: default.size.stdout
+ 
+Finished building: simplerCode.list
+ 
+23:14:55 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143288	    468	 101964	 245720	  3bfd8	simplerCode.elf
+Finished building: default.size.stdout
+ 
+23:18:02 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143288	    468	 101964	 245720	  3bfd8	simplerCode.elf
+Finished building: default.size.stdout
+ 
+23:19:21 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143288	    468	 101964	 245720	  3bfd8	simplerCode.elf
+Finished building: default.size.stdout
+ 
+23:20:10 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143288	    468	 101964	 245720	  3bfd8	simplerCode.elf
+Finished building: default.size.stdout
+ 
+23:23:56 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143288	    468	 101964	 245720	  3bfd8	simplerCode.elf
+Finished building: default.size.stdout
+ 
+23:25:04 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143288	    468	 101964	 245720	  3bfd8	simplerCode.elf
+Finished building: default.size.stdout
+ 
+23:28:05 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143288	    468	 101964	 245720	  3bfd8	simplerCode.elf
+Finished building: default.size.stdout
+ 
+23:31:01 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143288	    468	 101964	 245720	  3bfd8	simplerCode.elf
+Finished building: default.size.stdout
+ 
+23:31:43 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143288	    468	 101964	 245720	  3bfd8	simplerCode.elf
+Finished building: default.size.stdout
+ 
+23:35:50 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143288	    468	 101964	 245720	  3bfd8	simplerCode.elf
+Finished building: default.size.stdout
+ 
+23:36:27 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143288	    468	 101964	 245720	  3bfd8	simplerCode.elf
+Finished building: default.size.stdout
+ 
+23:41:48 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143288	    468	 101964	 245720	  3bfd8	simplerCode.elf
+Finished building: default.size.stdout
+ 
+23:46:53 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143288	    468	 101964	 245720	  3bfd8	simplerCode.elf
+Finished building: default.size.stdout
+ 
+23:50:56 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:27: warning: "ARM_MATH_CM4" redefined
+   27 | #define ARM_MATH_CM4
+      | 
+<command-line>: note: this is the location of the previous definition
+arm-none-eabi-gcc -o "simplerCode.elf" @"objects.list"  -larm_cortexM4lf_math -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\simplerCode\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="simplerCode.map" -Wl,--gc-sections -static -L../Drivers/CMSIS/Lib/GCC -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: simplerCode.elf
+ 
+arm-none-eabi-size  simplerCode.elf 
+arm-none-eabi-objdump -h -S simplerCode.elf  > "simplerCode.list"
+   text	   data	    bss	    dec	    hex	filename
+ 143256	    468	 101964	 245688	  3bfb8	simplerCode.elf
+Finished building: default.size.stdout
+ 
+Finished building: simplerCode.list
+ 
+23:51:21 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143256	    468	 101964	 245688	  3bfb8	simplerCode.elf
+Finished building: default.size.stdout
+ 
+23:52:10 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143256	    468	 101964	 245688	  3bfb8	simplerCode.elf
+Finished building: default.size.stdout
+ 
+23:52:56 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143256	    468	 101964	 245688	  3bfb8	simplerCode.elf
+Finished building: default.size.stdout
+ 
+23:53:29 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:27: warning: "ARM_MATH_CM4" redefined
+   27 | #define ARM_MATH_CM4
+      | 
+<command-line>: note: this is the location of the previous definition
+arm-none-eabi-gcc -o "simplerCode.elf" @"objects.list"  -larm_cortexM4lf_math -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\simplerCode\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="simplerCode.map" -Wl,--gc-sections -static -L../Drivers/CMSIS/Lib/GCC -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: simplerCode.elf
+ 
+arm-none-eabi-size  simplerCode.elf 
+arm-none-eabi-objdump -h -S simplerCode.elf  > "simplerCode.list"
+   text	   data	    bss	    dec	    hex	filename
+ 143264	    468	 101964	 245696	  3bfc0	simplerCode.elf
+Finished building: default.size.stdout
+ 
+Finished building: simplerCode.list
+ 
+23:57:32 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143264	    468	 101964	 245696	  3bfc0	simplerCode.elf
+Finished building: default.size.stdout
+ 
+00:01:02 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143264	    468	 101964	 245696	  3bfc0	simplerCode.elf
+Finished building: default.size.stdout
+ 
+00:10:12 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:27: warning: "ARM_MATH_CM4" redefined
+   27 | #define ARM_MATH_CM4
+      | 
+<command-line>: note: this is the location of the previous definition
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:300:58: warning: format '%u' expects argument of type 'unsigned int', but argument 3 has type 'double' [-Wformat=]
+  300 |                                 sprintf(bufferNumbers, "%u,%u\r\n", fftBufInADC1[j], fftBufInADC2[j]);
+      |                                                         ~^          ~~~~~~~~~~~~~~~
+      |                                                          |                      |
+      |                                                          unsigned int           double
+      |                                                         %f
+../Core/Src/main.c:300:61: warning: format '%u' expects argument of type 'unsigned int', but argument 4 has type 'double' [-Wformat=]
+  300 |                                 sprintf(bufferNumbers, "%u,%u\r\n", fftBufInADC1[j], fftBufInADC2[j]);
+      |                                                            ~^                        ~~~~~~~~~~~~~~~
+      |                                                             |                                    |
+      |                                                             unsigned int                         double
+      |                                                            %f
+arm-none-eabi-gcc -o "simplerCode.elf" @"objects.list"  -larm_cortexM4lf_math -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\simplerCode\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="simplerCode.map" -Wl,--gc-sections -static -L../Drivers/CMSIS/Lib/GCC -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: simplerCode.elf
+ 
+arm-none-eabi-size  simplerCode.elf 
+arm-none-eabi-objdump -h -S simplerCode.elf  > "simplerCode.list"
+   text	   data	    bss	    dec	    hex	filename
+ 142504	    468	 101964	 244936	  3bcc8	simplerCode.elf
+Finished building: default.size.stdout
+ 
+Finished building: simplerCode.list
+ 
+00:10:49 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:27: warning: "ARM_MATH_CM4" redefined
+   27 | #define ARM_MATH_CM4
+      | 
+<command-line>: note: this is the location of the previous definition
+arm-none-eabi-gcc -o "simplerCode.elf" @"objects.list"  -larm_cortexM4lf_math -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\simplerCode\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="simplerCode.map" -Wl,--gc-sections -static -L../Drivers/CMSIS/Lib/GCC -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: simplerCode.elf
+ 
+arm-none-eabi-size  simplerCode.elf 
+arm-none-eabi-objdump -h -S simplerCode.elf  > "simplerCode.list"
+   text	   data	    bss	    dec	    hex	filename
+ 142512	    468	 101964	 244944	  3bcd0	simplerCode.elf
+Finished building: default.size.stdout
+ 
+Finished building: simplerCode.list
+ 
+00:12:44 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 142512	    468	 101964	 244944	  3bcd0	simplerCode.elf
+Finished building: default.size.stdout
+ 
+00:13:34 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 142512	    468	 101964	 244944	  3bcd0	simplerCode.elf
+Finished building: default.size.stdout
+ 
+00:15:40 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:27: warning: "ARM_MATH_CM4" redefined
+   27 | #define ARM_MATH_CM4
+      | 
+<command-line>: note: this is the location of the previous definition
+arm-none-eabi-gcc -o "simplerCode.elf" @"objects.list"  -larm_cortexM4lf_math -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\simplerCode\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="simplerCode.map" -Wl,--gc-sections -static -L../Drivers/CMSIS/Lib/GCC -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: simplerCode.elf
+ 
+arm-none-eabi-size  simplerCode.elf 
+arm-none-eabi-objdump -h -S simplerCode.elf  > "simplerCode.list"
+   text	   data	    bss	    dec	    hex	filename
+ 142472	    468	 101964	 244904	  3bca8	simplerCode.elf
+Finished building: default.size.stdout
+ 
+Finished building: simplerCode.list
+ 
+00:19:54 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:27: warning: "ARM_MATH_CM4" redefined
+   27 | #define ARM_MATH_CM4
+      | 
+<command-line>: note: this is the location of the previous definition
+arm-none-eabi-gcc -o "simplerCode.elf" @"objects.list"  -larm_cortexM4lf_math -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\simplerCode\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="simplerCode.map" -Wl,--gc-sections -static -L../Drivers/CMSIS/Lib/GCC -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: simplerCode.elf
+ 
+arm-none-eabi-size  simplerCode.elf 
+arm-none-eabi-objdump -h -S simplerCode.elf  > "simplerCode.list"
+   text	   data	    bss	    dec	    hex	filename
+ 142512	    468	 101964	 244944	  3bcd0	simplerCode.elf
+Finished building: default.size.stdout
+ 
+Finished building: simplerCode.list
+ 
+00:20:51 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 142512	    468	 101964	 244944	  3bcd0	simplerCode.elf
+Finished building: default.size.stdout
+ 
+00:22:34 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 142512	    468	 101964	 244944	  3bcd0	simplerCode.elf
+Finished building: default.size.stdout
+ 
+00:26:59 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 142512	    468	 101964	 244944	  3bcd0	simplerCode.elf
+Finished building: default.size.stdout
+ 
+15:09:34 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 142512	    468	 101964	 244944	  3bcd0	simplerCode.elf
+Finished building: default.size.stdout
+ 
+15:11:35 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 142512	    468	 101964	 244944	  3bcd0	simplerCode.elf
+Finished building: default.size.stdout
+ 
+15:12:36 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 142512	    468	 101964	 244944	  3bcd0	simplerCode.elf
+Finished building: default.size.stdout
+ 
+15:21:33 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:27: warning: "ARM_MATH_CM4" redefined
+   27 | #define ARM_MATH_CM4
+      | 
+<command-line>: note: this is the location of the previous definition
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:256:64: warning: format '%d' expects a matching 'int' argument [-Wformat=]
+  256 |                                 sprintf(bufferNumbers, "%d,%d,%d,%d\r\n", adc_buf1[j], adc_buf1[j + 1]);
+      |                                                               ~^
+      |                                                                |
+      |                                                                int
+../Core/Src/main.c:256:67: warning: format '%d' expects a matching 'int' argument [-Wformat=]
+  256 |                                 sprintf(bufferNumbers, "%d,%d,%d,%d\r\n", adc_buf1[j], adc_buf1[j + 1]);
+      |                                                                  ~^
+      |                                                                   |
+      |                                                                   int
+arm-none-eabi-gcc -o "simplerCode.elf" @"objects.list"  -larm_cortexM4lf_math -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\simplerCode\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="simplerCode.map" -Wl,--gc-sections -static -L../Drivers/CMSIS/Lib/GCC -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: simplerCode.elf
+ 
+arm-none-eabi-size  simplerCode.elf 
+arm-none-eabi-objdump -h -S simplerCode.elf  > "simplerCode.list"
+   text	   data	    bss	    dec	    hex	filename
+ 143376	    468	 101964	 245808	  3c030	simplerCode.elf
+Finished building: default.size.stdout
+ 
+Finished building: simplerCode.list
+ 
+15:22:35 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:27: warning: "ARM_MATH_CM4" redefined
+   27 | #define ARM_MATH_CM4
+      | 
+<command-line>: note: this is the location of the previous definition
+arm-none-eabi-gcc -o "simplerCode.elf" @"objects.list"  -larm_cortexM4lf_math -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\simplerCode\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="simplerCode.map" -Wl,--gc-sections -static -L../Drivers/CMSIS/Lib/GCC -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: simplerCode.elf
+ 
+arm-none-eabi-size  simplerCode.elf 
+arm-none-eabi-objdump -h -S simplerCode.elf  > "simplerCode.list"
+   text	   data	    bss	    dec	    hex	filename
+ 143368	    468	 101964	 245800	  3c028	simplerCode.elf
+Finished building: default.size.stdout
+ 
+Finished building: simplerCode.list
+ 
+15:26:40 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:27: warning: "ARM_MATH_CM4" redefined
+   27 | #define ARM_MATH_CM4
+      | 
+<command-line>: note: this is the location of the previous definition
+arm-none-eabi-gcc -o "simplerCode.elf" @"objects.list"  -larm_cortexM4lf_math -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\simplerCode\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="simplerCode.map" -Wl,--gc-sections -static -L../Drivers/CMSIS/Lib/GCC -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: simplerCode.elf
+ 
+arm-none-eabi-size  simplerCode.elf 
+arm-none-eabi-objdump -h -S simplerCode.elf  > "simplerCode.list"
+   text	   data	    bss	    dec	    hex	filename
+ 143432	    468	 101964	 245864	  3c068	simplerCode.elf
+Finished building: default.size.stdout
+ 
+Finished building: simplerCode.list
+ 
+15:30:49 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143432	    468	 101964	 245864	  3c068	simplerCode.elf
+Finished building: default.size.stdout
+ 
+15:36:32 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:27: warning: "ARM_MATH_CM4" redefined
+   27 | #define ARM_MATH_CM4
+      | 
+<command-line>: note: this is the location of the previous definition
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:267:67: warning: format '%u' expects argument of type 'unsigned int', but argument 3 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  267 |                         sprintf(bufferNumbers, "Sampling rate is %u\r\n", samplingFreq);
+      |                                                                  ~^       ~~~~~~~~~~~~
+      |                                                                   |       |
+      |                                                                   |       uint32_t {aka long unsigned int}
+      |                                                                   unsigned int
+      |                                                                  %lu
+arm-none-eabi-gcc -o "simplerCode.elf" @"objects.list"  -larm_cortexM4lf_math -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\simplerCode\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="simplerCode.map" -Wl,--gc-sections -static -L../Drivers/CMSIS/Lib/GCC -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: simplerCode.elf
+ 
+arm-none-eabi-size  simplerCode.elf 
+arm-none-eabi-objdump -h -S simplerCode.elf  > "simplerCode.list"
+   text	   data	    bss	    dec	    hex	filename
+ 143472	    468	 101964	 245904	  3c090	simplerCode.elf
+Finished building: default.size.stdout
+ 
+Finished building: simplerCode.list
+ 
+15:37:37 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:27: warning: "ARM_MATH_CM4" redefined
+   27 | #define ARM_MATH_CM4
+      | 
+<command-line>: note: this is the location of the previous definition
+arm-none-eabi-gcc -o "simplerCode.elf" @"objects.list"  -larm_cortexM4lf_math -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\simplerCode\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="simplerCode.map" -Wl,--gc-sections -static -L../Drivers/CMSIS/Lib/GCC -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: simplerCode.elf
+ 
+arm-none-eabi-size  simplerCode.elf 
+arm-none-eabi-objdump -h -S simplerCode.elf  > "simplerCode.list"
+   text	   data	    bss	    dec	    hex	filename
+ 143376	    468	 101964	 245808	  3c030	simplerCode.elf
+Finished building: default.size.stdout
+ 
+Finished building: simplerCode.list
+ 
+15:38:51 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:27: warning: "ARM_MATH_CM4" redefined
+   27 | #define ARM_MATH_CM4
+      | 
+<command-line>: note: this is the location of the previous definition
+arm-none-eabi-gcc -o "simplerCode.elf" @"objects.list"  -larm_cortexM4lf_math -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\simplerCode\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="simplerCode.map" -Wl,--gc-sections -static -L../Drivers/CMSIS/Lib/GCC -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: simplerCode.elf
+ 
+arm-none-eabi-size  simplerCode.elf 
+arm-none-eabi-objdump -h -S simplerCode.elf  > "simplerCode.list"
+   text	   data	    bss	    dec	    hex	filename
+ 143400	    468	 101964	 245832	  3c048	simplerCode.elf
+Finished building: default.size.stdout
+ 
+Finished building: simplerCode.list
+ 
+15:41:45 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:27: warning: "ARM_MATH_CM4" redefined
+   27 | #define ARM_MATH_CM4
+      | 
+<command-line>: note: this is the location of the previous definition
+arm-none-eabi-gcc -o "simplerCode.elf" @"objects.list"  -larm_cortexM4lf_math -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\simplerCode\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="simplerCode.map" -Wl,--gc-sections -static -L../Drivers/CMSIS/Lib/GCC -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: simplerCode.elf
+ 
+arm-none-eabi-size  simplerCode.elf 
+arm-none-eabi-objdump -h -S simplerCode.elf  > "simplerCode.list"
+   text	   data	    bss	    dec	    hex	filename
+ 143496	    468	 101964	 245928	  3c0a8	simplerCode.elf
+Finished building: default.size.stdout
+ 
+Finished building: simplerCode.list
+ 
+15:42:36 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143496	    468	 101964	 245928	  3c0a8	simplerCode.elf
+Finished building: default.size.stdout
+ 
+16:06:46 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:27: warning: "ARM_MATH_CM4" redefined
+   27 | #define ARM_MATH_CM4
+      | 
+<command-line>: note: this is the location of the previous definition
+arm-none-eabi-gcc -o "simplerCode.elf" @"objects.list"  -larm_cortexM4lf_math -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\simplerCode\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="simplerCode.map" -Wl,--gc-sections -static -L../Drivers/CMSIS/Lib/GCC -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: simplerCode.elf
+ 
+arm-none-eabi-size  simplerCode.elf 
+arm-none-eabi-objdump -h -S simplerCode.elf  > "simplerCode.list"
+   text	   data	    bss	    dec	    hex	filename
+ 143584	    468	 101964	 246016	  3c100	simplerCode.elf
+Finished building: default.size.stdout
+ 
+Finished building: simplerCode.list
+ 
+16:20:31 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:27: warning: "ARM_MATH_CM4" redefined
+   27 | #define ARM_MATH_CM4
+      | 
+<command-line>: note: this is the location of the previous definition
+arm-none-eabi-gcc -o "simplerCode.elf" @"objects.list"  -larm_cortexM4lf_math -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\simplerCode\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="simplerCode.map" -Wl,--gc-sections -static -L../Drivers/CMSIS/Lib/GCC -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: simplerCode.elf
+ 
+arm-none-eabi-size  simplerCode.elf 
+arm-none-eabi-objdump -h -S simplerCode.elf  > "simplerCode.list"
+   text	   data	    bss	    dec	    hex	filename
+ 143656	    468	 101964	 246088	  3c148	simplerCode.elf
+Finished building: default.size.stdout
+ 
+Finished building: simplerCode.list
+ 
+16:21:16 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143656	    468	 101964	 246088	  3c148	simplerCode.elf
+Finished building: default.size.stdout
+ 
+16:21:37 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143656	    468	 101964	 246088	  3c148	simplerCode.elf
+Finished building: default.size.stdout
+ 
+16:24:17 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/stm32g4xx_hal_msp.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32g4xx_hal_msp.d" -MT"Core/Src/stm32g4xx_hal_msp.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32g4xx_hal_msp.o"
+arm-none-eabi-gcc "../Core/Src/stm32g4xx_it.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32g4xx_it.d" -MT"Core/Src/stm32g4xx_it.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32g4xx_it.o"
+../Core/Src/main.c:27: warning: "ARM_MATH_CM4" redefined
+   27 | #define ARM_MATH_CM4
+      | 
+<command-line>: note: this is the location of the previous definition
+arm-none-eabi-gcc -o "simplerCode.elf" @"objects.list"  -larm_cortexM4lf_math -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\simplerCode\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="simplerCode.map" -Wl,--gc-sections -static -L../Drivers/CMSIS/Lib/GCC -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: simplerCode.elf
+ 
+arm-none-eabi-size  simplerCode.elf 
+arm-none-eabi-objdump -h -S simplerCode.elf  > "simplerCode.list"
+   text	   data	    bss	    dec	    hex	filename
+ 143584	    468	 101964	 246016	  3c100	simplerCode.elf
+Finished building: default.size.stdout
+ 
+Finished building: simplerCode.list
+ 
+16:25:13 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:27: warning: "ARM_MATH_CM4" redefined
+   27 | #define ARM_MATH_CM4
+      | 
+<command-line>: note: this is the location of the previous definition
+arm-none-eabi-gcc -o "simplerCode.elf" @"objects.list"  -larm_cortexM4lf_math -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\simplerCode\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="simplerCode.map" -Wl,--gc-sections -static -L../Drivers/CMSIS/Lib/GCC -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: simplerCode.elf
+ 
+arm-none-eabi-size  simplerCode.elf 
+arm-none-eabi-objdump -h -S simplerCode.elf  > "simplerCode.list"
+   text	   data	    bss	    dec	    hex	filename
+ 143576	    468	 101964	 246008	  3c0f8	simplerCode.elf
+Finished building: default.size.stdout
+ 
+Finished building: simplerCode.list
+ 
+16:27:31 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:27: warning: "ARM_MATH_CM4" redefined
+   27 | #define ARM_MATH_CM4
+      | 
+<command-line>: note: this is the location of the previous definition
+arm-none-eabi-gcc -o "simplerCode.elf" @"objects.list"  -larm_cortexM4lf_math -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\simplerCode\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="simplerCode.map" -Wl,--gc-sections -static -L../Drivers/CMSIS/Lib/GCC -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: simplerCode.elf
+ 
+arm-none-eabi-size  simplerCode.elf 
+arm-none-eabi-objdump -h -S simplerCode.elf  > "simplerCode.list"
+   text	   data	    bss	    dec	    hex	filename
+ 143592	    468	 101964	 246024	  3c108	simplerCode.elf
+Finished building: default.size.stdout
+ 
+Finished building: simplerCode.list
+ 
+16:28:17 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143592	    468	 101964	 246024	  3c108	simplerCode.elf
+Finished building: default.size.stdout
+ 
+16:31:47 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:27: warning: "ARM_MATH_CM4" redefined
+   27 | #define ARM_MATH_CM4
+      | 
+<command-line>: note: this is the location of the previous definition
+arm-none-eabi-gcc -o "simplerCode.elf" @"objects.list"  -larm_cortexM4lf_math -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\simplerCode\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="simplerCode.map" -Wl,--gc-sections -static -L../Drivers/CMSIS/Lib/GCC -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: simplerCode.elf
+ 
+arm-none-eabi-size  simplerCode.elf 
+arm-none-eabi-objdump -h -S simplerCode.elf  > "simplerCode.list"
+   text	   data	    bss	    dec	    hex	filename
+ 143592	    468	 101964	 246024	  3c108	simplerCode.elf
+Finished building: default.size.stdout
+ 
+Finished building: simplerCode.list
+ 
+16:33:07 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:27: warning: "ARM_MATH_CM4" redefined
+   27 | #define ARM_MATH_CM4
+      | 
+<command-line>: note: this is the location of the previous definition
+arm-none-eabi-gcc -o "simplerCode.elf" @"objects.list"  -larm_cortexM4lf_math -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\simplerCode\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="simplerCode.map" -Wl,--gc-sections -static -L../Drivers/CMSIS/Lib/GCC -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: simplerCode.elf
+ 
+arm-none-eabi-size  simplerCode.elf 
+arm-none-eabi-objdump -h -S simplerCode.elf  > "simplerCode.list"
+   text	   data	    bss	    dec	    hex	filename
+ 143536	    468	 101964	 245968	  3c0d0	simplerCode.elf
+Finished building: default.size.stdout
+ 
+Finished building: simplerCode.list
+ 
+16:33:43 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143536	    468	 101964	 245968	  3c0d0	simplerCode.elf
+Finished building: default.size.stdout
+ 
+16:34:08 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143536	    468	 101964	 245968	  3c0d0	simplerCode.elf
+Finished building: default.size.stdout
+ 
+16:34:45 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143536	    468	 101964	 245968	  3c0d0	simplerCode.elf
+Finished building: default.size.stdout
+ 
+16:38:13 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:27: warning: "ARM_MATH_CM4" redefined
+   27 | #define ARM_MATH_CM4
+      | 
+<command-line>: note: this is the location of the previous definition
+arm-none-eabi-gcc -o "simplerCode.elf" @"objects.list"  -larm_cortexM4lf_math -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\simplerCode\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="simplerCode.map" -Wl,--gc-sections -static -L../Drivers/CMSIS/Lib/GCC -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: simplerCode.elf
+ 
+arm-none-eabi-size  simplerCode.elf 
+arm-none-eabi-objdump -h -S simplerCode.elf  > "simplerCode.list"
+   text	   data	    bss	    dec	    hex	filename
+ 143448	    468	 101964	 245880	  3c078	simplerCode.elf
+Finished building: default.size.stdout
+ 
+Finished building: simplerCode.list
+ 
+16:38:36 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143448	    468	 101964	 245880	  3c078	simplerCode.elf
+Finished building: default.size.stdout
+ 
+16:38:59 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143448	    468	 101964	 245880	  3c078	simplerCode.elf
+Finished building: default.size.stdout
+ 
+16:39:36 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143448	    468	 101964	 245880	  3c078	simplerCode.elf
+Finished building: default.size.stdout
+ 
+16:45:37 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-gcc "../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.d" -MT"Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/stm32g4xx_it.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32g4xx_it.d" -MT"Core/Src/stm32g4xx_it.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32g4xx_it.o"
+../Core/Src/main.c:27: warning: "ARM_MATH_CM4" redefined
+   27 | #define ARM_MATH_CM4
+      | 
+<command-line>: note: this is the location of the previous definition
+arm-none-eabi-gcc -o "simplerCode.elf" @"objects.list"  -larm_cortexM4lf_math -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\simplerCode\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="simplerCode.map" -Wl,--gc-sections -static -L../Drivers/CMSIS/Lib/GCC -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: simplerCode.elf
+ 
+arm-none-eabi-size  simplerCode.elf 
+arm-none-eabi-objdump -h -S simplerCode.elf  > "simplerCode.list"
+   text	   data	    bss	    dec	    hex	filename
+ 143448	    468	 101964	 245880	  3c078	simplerCode.elf
+Finished building: default.size.stdout
+ 
+Finished building: simplerCode.list
+ 
+19:19:52 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:27: warning: "ARM_MATH_CM4" redefined
+   27 | #define ARM_MATH_CM4
+      | 
+<command-line>: note: this is the location of the previous definition
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:251:28: error: too many arguments to function 'HAL_ADCEx_MultiModeStop_DMA'
+  251 |                         if(HAL_ADCEx_MultiModeStop_DMA(&hadc1, (uint32_t *) adc_buf1, ADC_BUF_LEN) != HAL_OK)
+      |                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_adc.h:2198,
+                 from ../Core/Inc/stm32g4xx_hal_conf.h:228,
+                 from ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Src/main.c:20:
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_adc_ex.h:1508:25: note: declared here
+ 1508 | HAL_StatusTypeDef       HAL_ADCEx_MultiModeStop_DMA(ADC_HandleTypeDef *hadc);
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:256:28: error: too many arguments to function 'HAL_ADCEx_MultiModeStop_DMA'
+  256 |                         if(HAL_ADCEx_MultiModeStop_DMA(&hadc3, (uint32_t *) adc_buf3, ADC_BUF_LEN) != HAL_OK)
+      |                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_adc_ex.h:1508:25: note: declared here
+ 1508 | HAL_StatusTypeDef       HAL_ADCEx_MultiModeStop_DMA(ADC_HandleTypeDef *hadc);
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+make: *** [Core/Src/subdir.mk:34: Core/Src/main.o] Error 1
+"make -j22 all" terminated with exit code 2. Build might be incomplete.
+19:19:59 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:27: warning: "ARM_MATH_CM4" redefined
+   27 | #define ARM_MATH_CM4
+      | 
+<command-line>: note: this is the location of the previous definition
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:251:28: error: too many arguments to function 'HAL_ADCEx_MultiModeStop_DMA'
+  251 |                         if(HAL_ADCEx_MultiModeStop_DMA(&hadc1, (uint32_t *) adc_buf1, ADC_BUF_LEN) != HAL_OK)
+      |                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_adc.h:2198,
+                 from ../Core/Inc/stm32g4xx_hal_conf.h:228,
+                 from ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Src/main.c:20:
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_adc_ex.h:1508:25: note: declared here
+ 1508 | HAL_StatusTypeDef       HAL_ADCEx_MultiModeStop_DMA(ADC_HandleTypeDef *hadc);
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:256:28: error: too many arguments to function 'HAL_ADCEx_MultiModeStop_DMA'
+  256 |                         if(HAL_ADCEx_MultiModeStop_DMA(&hadc3, (uint32_t *) adc_buf3, ADC_BUF_LEN) != HAL_OK)
+      |                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_adc_ex.h:1508:25: note: declared here
+ 1508 | HAL_StatusTypeDef       HAL_ADCEx_MultiModeStop_DMA(ADC_HandleTypeDef *hadc);
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+make: *** [Core/Src/subdir.mk:34: Core/Src/main.o] Error 1
+"make -j22 all" terminated with exit code 2. Build might be incomplete.
+19:21:07 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:27: warning: "ARM_MATH_CM4" redefined
+   27 | #define ARM_MATH_CM4
+      | 
+<command-line>: note: this is the location of the previous definition
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:251:28: error: too many arguments to function 'HAL_ADCEx_MultiModeStop_DMA'
+  251 |                         if(HAL_ADCEx_MultiModeStop_DMA(&hadc1, (uint32_t *) adc_buf1, ADC_BUF_LEN) != HAL_OK)
+      |                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_adc.h:2198,
+                 from ../Core/Inc/stm32g4xx_hal_conf.h:228,
+                 from ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Src/main.c:20:
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_adc_ex.h:1508:25: note: declared here
+ 1508 | HAL_StatusTypeDef       HAL_ADCEx_MultiModeStop_DMA(ADC_HandleTypeDef *hadc);
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:256:28: error: too many arguments to function 'HAL_ADCEx_MultiModeStop_DMA'
+  256 |                         if(HAL_ADCEx_MultiModeStop_DMA(&hadc3, (uint32_t *) adc_buf3, ADC_BUF_LEN) != HAL_OK)
+      |                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_adc_ex.h:1508:25: note: declared here
+ 1508 | HAL_StatusTypeDef       HAL_ADCEx_MultiModeStop_DMA(ADC_HandleTypeDef *hadc);
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+make: *** [Core/Src/subdir.mk:34: Core/Src/main.o] Error 1
+"make -j22 all" terminated with exit code 2. Build might be incomplete.
+19:22:14 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:27: warning: "ARM_MATH_CM4" redefined
+   27 | #define ARM_MATH_CM4
+      | 
+<command-line>: note: this is the location of the previous definition
+arm-none-eabi-gcc -o "simplerCode.elf" @"objects.list"  -larm_cortexM4lf_math -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\simplerCode\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="simplerCode.map" -Wl,--gc-sections -static -L../Drivers/CMSIS/Lib/GCC -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: simplerCode.elf
+ 
+arm-none-eabi-size  simplerCode.elf 
+arm-none-eabi-objdump -h -S simplerCode.elf  > "simplerCode.list"
+   text	   data	    bss	    dec	    hex	filename
+ 143440	    468	 101964	 245872	  3c070	simplerCode.elf
+Finished building: default.size.stdout
+ 
+Finished building: simplerCode.list
+ 
+19:23:03 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143440	    468	 101964	 245872	  3c070	simplerCode.elf
+Finished building: default.size.stdout
+ 
+19:23:50 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143440	    468	 101964	 245872	  3c070	simplerCode.elf
+Finished building: default.size.stdout
+ 
+19:24:18 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143440	    468	 101964	 245872	  3c070	simplerCode.elf
+Finished building: default.size.stdout
+ 
+19:24:51 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143440	    468	 101964	 245872	  3c070	simplerCode.elf
+Finished building: default.size.stdout
+ 
+19:25:36 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143440	    468	 101964	 245872	  3c070	simplerCode.elf
+Finished building: default.size.stdout
+ 
+19:27:31 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143440	    468	 101964	 245872	  3c070	simplerCode.elf
+Finished building: default.size.stdout
+ 
+19:32:06 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143440	    468	 101964	 245872	  3c070	simplerCode.elf
+Finished building: default.size.stdout
+ 
+19:35:13 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:27: warning: "ARM_MATH_CM4" redefined
+   27 | #define ARM_MATH_CM4
+      | 
+<command-line>: note: this is the location of the previous definition
+arm-none-eabi-gcc -o "simplerCode.elf" @"objects.list"  -larm_cortexM4lf_math -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\simplerCode\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="simplerCode.map" -Wl,--gc-sections -static -L../Drivers/CMSIS/Lib/GCC -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: simplerCode.elf
+ 
+arm-none-eabi-size  simplerCode.elf 
+arm-none-eabi-objdump -h -S simplerCode.elf  > "simplerCode.list"
+   text	   data	    bss	    dec	    hex	filename
+ 143216	    468	 101964	 245648	  3bf90	simplerCode.elf
+Finished building: default.size.stdout
+ 
+Finished building: simplerCode.list
+ 
+19:38:48 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143216	    468	 101964	 245648	  3bf90	simplerCode.elf
+Finished building: default.size.stdout
+ 
+19:41:42 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:27: warning: "ARM_MATH_CM4" redefined
+   27 | #define ARM_MATH_CM4
+      | 
+<command-line>: note: this is the location of the previous definition
+arm-none-eabi-gcc -o "simplerCode.elf" @"objects.list"  -larm_cortexM4lf_math -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\simplerCode\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="simplerCode.map" -Wl,--gc-sections -static -L../Drivers/CMSIS/Lib/GCC -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: simplerCode.elf
+ 
+arm-none-eabi-size  simplerCode.elf 
+arm-none-eabi-objdump -h -S simplerCode.elf  > "simplerCode.list"
+   text	   data	    bss	    dec	    hex	filename
+ 143480	    468	 101964	 245912	  3c098	simplerCode.elf
+Finished building: default.size.stdout
+ 
+Finished building: simplerCode.list
+ 
+19:42:46 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143480	    468	 101964	 245912	  3c098	simplerCode.elf
+Finished building: default.size.stdout
+ 
+19:51:50 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:27: warning: "ARM_MATH_CM4" redefined
+   27 | #define ARM_MATH_CM4
+      | 
+<command-line>: note: this is the location of the previous definition
+arm-none-eabi-gcc -o "simplerCode.elf" @"objects.list"  -larm_cortexM4lf_math -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\simplerCode\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="simplerCode.map" -Wl,--gc-sections -static -L../Drivers/CMSIS/Lib/GCC -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: simplerCode.elf
+ 
+arm-none-eabi-size  simplerCode.elf 
+arm-none-eabi-objdump -h -S simplerCode.elf  > "simplerCode.list"
+   text	   data	    bss	    dec	    hex	filename
+ 142912	    468	 101964	 245344	  3be60	simplerCode.elf
+Finished building: default.size.stdout
+ 
+Finished building: simplerCode.list
+ 
+19:57:50 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 142912	    468	 101964	 245344	  3be60	simplerCode.elf
+Finished building: default.size.stdout
+ 
+20:01:37 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 142912	    468	 101964	 245344	  3be60	simplerCode.elf
+Finished building: default.size.stdout
+ 
+20:10:25 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:27: warning: "ARM_MATH_CM4" redefined
+   27 | #define ARM_MATH_CM4
+      | 
+<command-line>: note: this is the location of the previous definition
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:434:95: error: invalid operands to binary ^ (have 'float32_t' {aka 'float'} and 'float32_t' {aka 'float'})
+  434 |                         sprintf(bufferNumbers, "%1.2f,%1.2f,%1.2f,%1.2f\r\n", fftBufOutADC1[j]^2 + fftBufOutADC1[j+1]^2, fftBufOutADC2[j]^2 + fftBufOutADC2[j+1]^2, fftBufOutADC3[j]^2 + fftBufOutADC3[j+1]^2, fftBufOutADC4[j]^2 + fftBufOutADC4[j+1]^2);
+      |                                                                               ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~
+      |                                                                                            |     |
+      |                                                                                            |     float32_t {aka float}
+      |                                                                                            float32_t {aka float}
+../Core/Src/main.c:434:138: error: invalid operands to binary ^ (have 'float32_t' {aka 'float'} and 'float32_t' {aka 'float'})
+  434 |                         sprintf(bufferNumbers, "%1.2f,%1.2f,%1.2f,%1.2f\r\n", fftBufOutADC1[j]^2 + fftBufOutADC1[j+1]^2, fftBufOutADC2[j]^2 + fftBufOutADC2[j+1]^2, fftBufOutADC3[j]^2 + fftBufOutADC3[j+1]^2, fftBufOutADC4[j]^2 + fftBufOutADC4[j+1]^2);
+      |                                                                                                                          ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~
+      |                                                                                                                                       |     |
+      |                                                                                                                                       |     float32_t {aka float}
+      |                                                                                                                                       float32_t {aka float}
+../Core/Src/main.c:434:181: error: invalid operands to binary ^ (have 'float32_t' {aka 'float'} and 'float32_t' {aka 'float'})
+  434 |                         sprintf(bufferNumbers, "%1.2f,%1.2f,%1.2f,%1.2f\r\n", fftBufOutADC1[j]^2 + fftBufOutADC1[j+1]^2, fftBufOutADC2[j]^2 + fftBufOutADC2[j+1]^2, fftBufOutADC3[j]^2 + fftBufOutADC3[j+1]^2, fftBufOutADC4[j]^2 + fftBufOutADC4[j+1]^2);
+      |                                                                                                                                                                     ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~
+      |                                                                                                                                                                                  |     |
+      |                                                                                                                                                                                  |     float32_t {aka float}
+      |                                                                                                                                                                                  float32_t {aka float}
+../Core/Src/main.c:434:224: error: invalid operands to binary ^ (have 'float32_t' {aka 'float'} and 'float32_t' {aka 'float'})
+  434 |                         sprintf(bufferNumbers, "%1.2f,%1.2f,%1.2f,%1.2f\r\n", fftBufOutADC1[j]^2 + fftBufOutADC1[j+1]^2, fftBufOutADC2[j]^2 + fftBufOutADC2[j+1]^2, fftBufOutADC3[j]^2 + fftBufOutADC3[j+1]^2, fftBufOutADC4[j]^2 + fftBufOutADC4[j+1]^2);
+      |                                                                                                                                                                                                                ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~
+      |                                                                                                                                                                                                                             |     |
+      |                                                                                                                                                                                                                             |     float32_t {aka float}
+      |                                                                                                                                                                                                                             float32_t {aka float}
+make: *** [Core/Src/subdir.mk:34: Core/Src/main.o] Error 1
+"make -j22 all" terminated with exit code 2. Build might be incomplete.
+20:12:24 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:27: warning: "ARM_MATH_CM4" redefined
+   27 | #define ARM_MATH_CM4
+      | 
+<command-line>: note: this is the location of the previous definition
+arm-none-eabi-gcc -o "simplerCode.elf" @"objects.list"  -larm_cortexM4lf_math -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\simplerCode\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="simplerCode.map" -Wl,--gc-sections -static -L../Drivers/CMSIS/Lib/GCC -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: simplerCode.elf
+ 
+arm-none-eabi-size  simplerCode.elf 
+arm-none-eabi-objdump -h -S simplerCode.elf  > "simplerCode.list"
+   text	   data	    bss	    dec	    hex	filename
+ 143176	    468	 101964	 245608	  3bf68	simplerCode.elf
+Finished building: default.size.stdout
+ 
+Finished building: simplerCode.list
+ 
+20:14:38 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143176	    468	 101964	 245608	  3bf68	simplerCode.elf
+Finished building: default.size.stdout
+ 
+20:33:56 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:27: warning: "ARM_MATH_CM4" redefined
+   27 | #define ARM_MATH_CM4
+      | 
+<command-line>: note: this is the location of the previous definition
+arm-none-eabi-gcc -o "simplerCode.elf" @"objects.list"  -larm_cortexM4lf_math -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\simplerCode\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="simplerCode.map" -Wl,--gc-sections -static -L../Drivers/CMSIS/Lib/GCC -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: simplerCode.elf
+ 
+arm-none-eabi-size  simplerCode.elf 
+arm-none-eabi-objdump -h -S simplerCode.elf  > "simplerCode.list"
+   text	   data	    bss	    dec	    hex	filename
+ 143088	    468	 101964	 245520	  3bf10	simplerCode.elf
+Finished building: default.size.stdout
+ 
+Finished building: simplerCode.list
+ 
+20:36:31 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143088	    468	 101964	 245520	  3bf10	simplerCode.elf
+Finished building: default.size.stdout
+ 
+20:39:39 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143088	    468	 101964	 245520	  3bf10	simplerCode.elf
+Finished building: default.size.stdout
+ 
+20:47:20 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143088	    468	 101964	 245520	  3bf10	simplerCode.elf
+Finished building: default.size.stdout
+ 
+20:59:15 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143088	    468	 101964	 245520	  3bf10	simplerCode.elf
+Finished building: default.size.stdout
+ 
+20:59:53 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:27: warning: "ARM_MATH_CM4" redefined
+   27 | #define ARM_MATH_CM4
+      | 
+<command-line>: note: this is the location of the previous definition
+arm-none-eabi-gcc -o "simplerCode.elf" @"objects.list"  -larm_cortexM4lf_math -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\simplerCode\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="simplerCode.map" -Wl,--gc-sections -static -L../Drivers/CMSIS/Lib/GCC -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: simplerCode.elf
+ 
+arm-none-eabi-size  simplerCode.elf 
+arm-none-eabi-objdump -h -S simplerCode.elf  > "simplerCode.list"
+   text	   data	    bss	    dec	    hex	filename
+ 143216	    468	 101964	 245648	  3bf90	simplerCode.elf
+Finished building: default.size.stdout
+ 
+Finished building: simplerCode.list
+ 
+21:03:58 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:27: warning: "ARM_MATH_CM4" redefined
+   27 | #define ARM_MATH_CM4
+      | 
+<command-line>: note: this is the location of the previous definition
+arm-none-eabi-gcc -o "simplerCode.elf" @"objects.list"  -larm_cortexM4lf_math -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\simplerCode\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="simplerCode.map" -Wl,--gc-sections -static -L../Drivers/CMSIS/Lib/GCC -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: simplerCode.elf
+ 
+arm-none-eabi-size  simplerCode.elf 
+arm-none-eabi-objdump -h -S simplerCode.elf  > "simplerCode.list"
+   text	   data	    bss	    dec	    hex	filename
+ 143616	    468	 101964	 246048	  3c120	simplerCode.elf
+Finished building: default.size.stdout
+ 
+Finished building: simplerCode.list
+ 
+21:04:50 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:27: warning: "ARM_MATH_CM4" redefined
+   27 | #define ARM_MATH_CM4
+      | 
+<command-line>: note: this is the location of the previous definition
+arm-none-eabi-gcc -o "simplerCode.elf" @"objects.list"  -larm_cortexM4lf_math -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\simplerCode\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="simplerCode.map" -Wl,--gc-sections -static -L../Drivers/CMSIS/Lib/GCC -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: simplerCode.elf
+ 
+arm-none-eabi-size  simplerCode.elf 
+arm-none-eabi-objdump -h -S simplerCode.elf  > "simplerCode.list"
+   text	   data	    bss	    dec	    hex	filename
+ 143496	    468	 101964	 245928	  3c0a8	simplerCode.elf
+Finished building: default.size.stdout
+ 
+Finished building: simplerCode.list
+ 
+21:06:46 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-size  simplerCode.elf 
+   text	   data	    bss	    dec	    hex	filename
+ 143496	    468	 101964	 245928	  3c0a8	simplerCode.elf
+Finished building: default.size.stdout
+ 
+21:55:59 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:27: warning: "ARM_MATH_CM4" redefined
+   27 | #define ARM_MATH_CM4
+      | 
+<command-line>: note: this is the location of the previous definition
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:449:30: error: redeclaration of 'bufferNumbers' with no linkage
+  449 |                         char bufferNumbers[100];
+      |                              ^~~~~~~~~~~~~
+../Core/Src/main.c:439:30: note: previous declaration of 'bufferNumbers' with type 'char[100]'
+  439 |                         char bufferNumbers[100];
+      |                              ^~~~~~~~~~~~~
+make: *** [Core/Src/subdir.mk:34: Core/Src/main.o] Error 1
+"make -j22 all" terminated with exit code 2. Build might be incomplete.
+21:56:31 **** Incremental Build of configuration Debug for project simplerCode ****
+make -j22 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DARM_MATH_CM4 -DUSE_HAL_DRIVER -DSTM32G473xx -c -I../Core/Inc -I../Drivers/CMSIS/DSP/PrivateInclude -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/DSP/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:27: warning: "ARM_MATH_CM4" redefined
+   27 | #define ARM_MATH_CM4
+      | 
+<command-line>: note: this is the location of the previous definition
+arm-none-eabi-gcc -o "simplerCode.elf" @"objects.list"  -larm_cortexM4lf_math -mcpu=cortex-m4 -T"C:\Users\peter\OneDrive\Documents\IEEEMTTSCode\PhasedArrayRadar_IEEE_MTTS\STM32_Code\tutorial\simplerCode\STM32G473QETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="simplerCode.map" -Wl,--gc-sections -static -L../Drivers/CMSIS/Lib/GCC -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: simplerCode.elf
+ 
+arm-none-eabi-size  simplerCode.elf 
+arm-none-eabi-objdump -h -S simplerCode.elf  > "simplerCode.list"
+   text	   data	    bss	    dec	    hex	filename
+ 143712	    468	 101964	 246144	  3c180	simplerCode.elf
+Finished building: default.size.stdout
+ 
+Finished building: simplerCode.list
+ 

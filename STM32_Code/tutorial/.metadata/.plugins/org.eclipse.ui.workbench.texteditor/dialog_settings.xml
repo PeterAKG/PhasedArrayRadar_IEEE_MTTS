@@ -3,20 +3,20 @@
 	<item key="hasShownOverlayPopupBefore" value="true"/>
 	<item key="replaceBarOpen" value="false"/>
 	<list key="searchhistory">
-		<item value="fftBufInADC1"/>
 		<item value="fftHandler"/>
+		<item value="fftBufOutADC3"/>
+		<item value="HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4,"/>
+		<item value="HAL_TIM_PeriodElapsedCallback"/>
+		<item value="GPIO"/>
+		<item value="samplingFreq"/>
+		<item value="adc_buf1"/>
+		<item value="copyadc_buf1"/>
+		<item value="adc1cpy"/>
+		<item value="finishadc_buf1"/>
+		<item value="fftBufInADC1"/>
 		<item value="ADC1"/>
 		<item value="USE_HAL_ADC_REGISTER_CALLBACKS"/>
 		<item value="tmp_hadc_slave"/>
 		<item value="tmp_hal_status"/>
-		<item value="__HAL_TIM_ENABLE"/>
-		<item value="#if defined(ADC_MULTIMODE_SUPPORT)"/>
-		<item value="HAL_StatusTypeDef (ADC_H"/>
-		<item value="TIM8"/>
-		<item value="TIM_IRQHandler"/>
-		<item value="htim3"/>
-		<item value="break"/>
-		<item value="fftFlagADC12"/>
-		<item value="phaseResult"/>
 	</list>
 </section>
